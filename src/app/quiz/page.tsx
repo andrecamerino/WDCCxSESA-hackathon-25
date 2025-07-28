@@ -30,49 +30,60 @@ const questions: QuestionData[] = [
 
 
 const Quiz: React.FC = () => {
-  // Selected answers will be saved to an array called selectedAnswers
-  const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null));
+  // Use the set functions to update each variable.
+  const [currentIndex, setCurrentIndex] = useState(0); // Current question
+  const [score, setScore] = useState(0); // Track score
+  const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null)); // Selected answers will be saved to an array called selectedAnswers
+  const [quizComplete, setQuizComplete] = useState(false); // Check if quiz is copmlete
 
   const handleSelect = (choiceIndex: number) => {
     // Save the answer
     const updated = [...selectedAnswers];
     updated[currentIndex] = choiceIndex;
     setSelectedAnswers(updated);
-
-    setTimeout(() => {
-      // Checks if next question exists.
-      // If it exists then goes to next question
-      // if not then it's the end of the test. Check console for selected questions.
-      if (currentIndex < questions.length - 1) {
-        setCurrentIndex(currentIndex + 1);
-      } else {
-        // Change the logic in here to do stuff after the final question.
-        console.log("Selected: ", updated);
-      }
-    }, 0);
   };
 
+  const handleSubmit = () => {
+    // This function hamdles the submit button
+    const selected = selectedAnswers[currentIndex];
+    const correct = questions[currentIndex].correct;
+    
+    // Add score if correct
+    if (selected == correct){
+      setScore((prev) => prev + 1);
+    }
 
-  // Update index. Use setCurrentIndex() to update index.
-  const [currentIndex, setCurrentIndex] = useState(0);
+    // Advance page
+    if (currentIndex < questions.length - 1){
+      setCurrentIndex(currentIndex + 1);
+    }else{
+      // If no more pages to advance, then the quiz is complete
+      setQuizComplete(true);
+    }
+  }
+
+  if(quizComplete){
+    // If the quiz is complete, then show results etc
+    return(
+      <><h2>Quiz complete!</h2><p>Your score: {score} / {questions.length}</p></>
+    );
+  }
 
   return (
     <div className="max-w-xl mx-auto mt-10">
-      <MCQQuestion
-      // You have to increment the index everytime to load a new question.
-      // Currently only loads one question at a time...
-      // Should be an easys fix to load the entire question on one page. Just need to change page layout
+      <MCQQuestion // MCQQuestion uses the MCQQuestion.tsx file to format.
         question={questions[currentIndex].question}
         choices={questions[currentIndex].choices}
         selected={selectedAnswers[currentIndex]}
         onSelect={handleSelect}
       />
-      <button onClick={() => {
-        // This prevents index going into negatives
-        if (currentIndex > 0){
-          setCurrentIndex(currentIndex - 1);
-        }
-      }}>Back</button> 
+      <button
+        onClick={handleSubmit}
+        disabled={selectedAnswers[currentIndex] === null}
+        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+      >
+      Submit
+      </button>
     </div>  
     
   );

@@ -16,3 +16,22 @@ For practice we are gonna make q quick and easy Quiz Website! EVeryone's compone
 Note: Everyone has free reign on design of their component, as long as the logic is correct and works as intended
 
 If you guys have any questions just reach out, good luck!
+
+# LUCAS
+# LUCAS
+# LUCAS
+# LUCAS
+# LUCAS
+# LUCAS
+# LUCAS
+# LUCAS
+# LUCAS
+# LUCAS
+# LUCAS
+# LUCAS
+# LUCAS
+# LUCAS
+# LUCAS
+# LUCAS
+# LUCAS
+# LUCAS

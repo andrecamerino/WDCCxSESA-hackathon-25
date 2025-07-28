@@ -2,31 +2,7 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import MCQQuestion from "../MCQquestions/MCQquestions";
-
-type QuestionData = {
-  question: string;
-  choices: string[];
-  correct: number;
-};
-
-const questions: QuestionData[] = [
-  // This format is basic but should work for our website
-    {
-    question: 'What is the capital of Japan?',
-    choices: ['Seoul', 'Tokyo', 'Kyoto', 'Osaka'],
-    correct: 1,
-  },
-  {
-    question: 'Which planet is known as the Red Planet?',
-    choices: ['Earth', 'Venus', 'Mars', 'Jupiter'],
-    correct: 2,
-  },
-  {
-    question: 'Who wrote "Hamlet"?',
-    choices: ['Charles Dickens', 'Mark Twain', 'Shakespeare', 'Hemingway'],
-    correct: 2,
-  },
-]
+import { questions } from '../data/questions'; 
 
 
 const Quiz: React.FC = () => {

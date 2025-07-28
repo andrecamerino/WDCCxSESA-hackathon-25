@@ -1,6 +1,6 @@
 // src/pages/Quiz.tsx
 'use client';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MCQQuestion from "../MCQquestions/MCQquestions";
 
 type QuestionData = {
@@ -28,9 +28,20 @@ const questions: QuestionData[] = [
   },
 ]
 
+
 const Quiz: React.FC = () => {
   // currentlySelected is the variable where the selected answer will be saved to.
   const [selected, currentlySelected] = useState<number | null>(null);
+
+  // Update index. Use setCurrentIndex() to update index.
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
+  // Check if index is less than 0, reset back to 0.
+  useEffect(() => {
+    if (currentIndex < 0){
+      setCurrentIndex(0);
+    }
+  }, [currentIndex]);
 
   return (
     <div className="max-w-xl mx-auto mt-10">
@@ -38,13 +49,14 @@ const Quiz: React.FC = () => {
       // You have to increment the index everytime to load a new question.
       // Currently only loads one question at a time...
       // Should be an easys fix to load the entire question on one page. Just need to change page layout
-        question={questions[0].question}
-        choices={questions[0].choices}
+        question={questions[currentIndex].question}
+        choices={questions[currentIndex].choices}
         selected={selected}
         onSelect={(index) => currentlySelected(index)}
       />
+      <button onClick={() => setCurrentIndex(currentIndex - 1)}>Back</button> 
+      <button onClick={() => setCurrentIndex(currentIndex + 1)}>Next</button>
     </div>
   );
 };
-
 export default Quiz;

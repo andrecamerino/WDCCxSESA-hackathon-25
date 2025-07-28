@@ -1,8 +1,14 @@
 import React from 'react'
+import HeaderComponent from '../Components/HeaderComponent'
+
 
 const page = () => {
   return (
-    <div>page</div>
+    <div>
+      <HeaderComponent />
+
+    </div>
+
   )
 }
 

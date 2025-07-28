@@ -30,18 +30,31 @@ const questions: QuestionData[] = [
 
 
 const Quiz: React.FC = () => {
-  // currentlySelected is the variable where the selected answer will be saved to.
-  const [selected, currentlySelected] = useState<number | null>(null);
+  // Selected answers will be saved to an array called selectedAnswers
+  const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null));
+
+  const handleSelect = (choiceIndex: number) => {
+    // Save the answer
+    const updated = [...selectedAnswers];
+    updated[currentIndex] = choiceIndex;
+    setSelectedAnswers(updated);
+
+    setTimeout(() => {
+      // Checks if next question exists.
+      // If it exists then goes to next question
+      // if not then it's the end of the test. Check console for selected questions.
+      if (currentIndex < questions.length - 1) {
+        setCurrentIndex(currentIndex + 1);
+      } else {
+        // Change the logic in here to do stuff after the final question.
+        console.log("Selected: ", updated);
+      }
+    }, 0);
+  };
+
 
   // Update index. Use setCurrentIndex() to update index.
   const [currentIndex, setCurrentIndex] = useState(0);
-  
-  // Check if index is less than 0, reset back to 0.
-  useEffect(() => {
-    if (currentIndex < 0){
-      setCurrentIndex(0);
-    }
-  }, [currentIndex]);
 
   return (
     <div className="max-w-xl mx-auto mt-10">
@@ -51,12 +64,19 @@ const Quiz: React.FC = () => {
       // Should be an easys fix to load the entire question on one page. Just need to change page layout
         question={questions[currentIndex].question}
         choices={questions[currentIndex].choices}
-        selected={selected}
-        onSelect={(index) => currentlySelected(index)}
+        selected={selectedAnswers[currentIndex]}
+        onSelect={handleSelect}
       />
-      <button onClick={() => setCurrentIndex(currentIndex - 1)}>Back</button> 
-      <button onClick={() => setCurrentIndex(currentIndex + 1)}>Next</button>
-    </div>
+      <button onClick={() => {
+        // This prevents index going into negatives
+        if (currentIndex > 0){
+          setCurrentIndex(currentIndex - 1);
+        }
+      }}>Back</button> 
+    </div>  
+    
   );
+  
 };
+
 export default Quiz;

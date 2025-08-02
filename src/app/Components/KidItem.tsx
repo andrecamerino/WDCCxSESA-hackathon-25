@@ -56,6 +56,12 @@ const KidItem: React.FC<KidItemProps> = ({
                 }`}
                 onClick={handleClick}
             >
+            <div 
+                className={`relative z-20 w-55 h-55 bg-white shadow-2xl rounded-4xl mx-auto my-4 p-4 cursor-pointer transition-all duration-300 ${
+                    isPurchased ? 'opacity-50 pointer-events-none' : 'hover:scale-105'
+                }`}
+                onClick={handleClick}
+            >
                 {/* text describing what the item is */}
                 <div className="p-1">
                     <span className="text-md font-semibold">{name}</span>

@@ -5,6 +5,7 @@ import { useWindowSize } from "@react-hook/window-size";
 
 const Login = () => {
   const [loginType, setLoginType] = useState<string | null>(null);
+  const [loginType, setLoginType] = useState<string | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -16,9 +17,9 @@ const Login = () => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [width, height] = useWindowSize();
 
-  const selectLoginType = (type) => {
-    setPiggyAnimClass("animate-roll-left");
-    setSmallPiggyAnimClass("");
+  const selectLoginType = (type: string) => {
+    setPiggyAnimClass('animate-roll-left');
+    setSmallPiggyAnimClass('');
     setShowSmallPiggy(false);
 
     setTimeout(() => {

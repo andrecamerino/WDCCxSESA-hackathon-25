@@ -1,18 +1,50 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import KidItem from './KidItem';
 
+type ShopItem = {
+  _id: string;
+  name: string;
+  price: number;
+  imgSrc?: string;
+  stock?: number;
+  createdAt: string;
+};
+
 const ShopItemContainer = () => {
+  const [items, setItems] = useState<ShopItem[]>([]);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch("/api/shopItems");
+        const data = await response.json();
+        setItems(data);
+      } catch (error) {
+        console.error("Error fetching shop items:", error);
+      }
+    };
+
+    fetchItems();
+  }, []);
+
   return (
     <div
-                className="flex flex-col items-center px-4 pt-10 h-200 overflow-y-auto pb-100"
-            >
-                <KidItem />
-                <KidItem />
-                <KidItem />
-                <KidItem />
-                <KidItem />
-            </div>
-  )
+      className="flex flex-col items-center px-4 pt-10 h-200 overflow-y-auto pb-100"
+    >
+      {items
+        .slice()
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        .map((item) => (
+          <KidItem
+            key={item._id}
+            name={item.name}
+            price={item.price}
+            imgSrc={item.imgSrc}
+            stock={item.stock}
+          />
+        ))}
+    </div>
+  );
 }
 
 export default ShopItemContainer

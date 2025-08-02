@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import QuestList from '../Components/QuestContainer';
-import "../globals.css";
-import { getQuests, toggleQuestCompletion } from "../data/QuestList";
-import type { Quest } from "../data/QuestList";
+import React, { useState, useEffect } from "react";
+import QuestList from "../../Components/QuestContainer";
+import { getQuests, toggleQuestCompletion } from "../../data/QuestList";
+import type { Quest } from "../../data/QuestList";
 
-const HomePage: React.FC = () => {
+const KidsQuestPage: React.FC = () => {
   const [quests, setQuests] = useState<Quest[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -30,9 +29,7 @@ const HomePage: React.FC = () => {
 
     try {
       await toggleQuestCompletion(quest.id, updated.completed);
-      setQuests(prev =>
-        prev.map((q, i) => (i === index ? updated : q))
-      );
+      setQuests((prev) => prev.map((q, i) => (i === index ? updated : q)));
     } catch (err) {
       console.error("Failed to update quest:", err);
     }
@@ -47,4 +44,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage;
+export default KidsQuestPage;

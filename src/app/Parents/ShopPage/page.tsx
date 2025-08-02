@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import ParentShopItem from "../Components/ParentShopItem";
+import ParentShopItem from "../../Components/ParentShopItem";
 
 const Page = () => {
 

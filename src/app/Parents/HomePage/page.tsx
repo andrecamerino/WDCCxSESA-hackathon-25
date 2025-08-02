@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import ParentNavbar from '../Components/ParentNavbar';
-import ParentHeader from '../Components/ParentHeader';
+import ParentNavbar from '../../Components/ParentNavbar';
+import ParentHeader from '../../Components/ParentHeader';
 import Image from 'next/image';
 
 const Page = () => {
@@ -82,8 +82,6 @@ const Page = () => {
           </p>
         </div>
       </div>
-
-      <ParentNavbar />
     </div>
   );
 };

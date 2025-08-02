@@ -4,11 +4,11 @@ import { FaScroll } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 
 
-const Navbar = () => {
+const KidsNavbar = () => {
   return (
     <div className="fixed bottom-0 w-full bg-white border-t-6 border-l-6 border-r-6 border-black rounded-t-3xl flex justify-around items-center py-3 z-999 h-[100px] text-2xl ">
       <a
-        href="/QuestPage"
+        href="/Kids/QuestPage"
         style={{
           borderRadius: "30% 70% 35% 65% / 58% 25% 75% 42% ",
         }}
@@ -17,7 +17,7 @@ const Navbar = () => {
         <FaScroll className="text-black text-4xl font-bold" />
       </a>
       <a
-        href="/Home"
+        href="/Kids/HomePage"
         style={{
           borderRadius: "54% 46% 56% 44% / 42% 58% 42% 58% ",
         }}
@@ -26,7 +26,7 @@ const Navbar = () => {
         <FaHouse className="text-black text-4xl font-bold" />
       </a>
       <a
-        href="/KidsShop"
+        href="/Kids/ShopPage"
         style={{
           borderRadius: "68% 32% 63% 37% / 28% 72% 28% 72%",
         }}
@@ -38,4 +38,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default KidsNavbar;

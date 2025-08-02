@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import ParentNavbar from '../Components/ParentNavbar';
-import ParentHeader from '../Components/ParentHeader';
+import ParentNavbar from '../../Components/ParentNavbar';
+import ParentHeader from '../../Components/ParentHeader';
 import Image from 'next/image';
 
 const Page = () => {
@@ -19,7 +19,6 @@ const Page = () => {
   return (
     <div style={{ backgroundColor: '#D4EEFF', minHeight: '100vh' }}>
       <div style={contentWrapperStyle}>
-        <ParentHeader />
         <Image
           src="/assets/piggy.png"
           alt="Piggy Quest"
@@ -82,8 +81,6 @@ const Page = () => {
           </p>
         </div>
       </div>
-
-      <ParentNavbar />
     </div>
   );
 };

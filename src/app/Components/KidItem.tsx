@@ -1,139 +1,121 @@
-import React, { useState } from 'react'
-import Image from 'next/image';
-import confetti from 'canvas-confetti';
-import { useShopState } from './ShopStateContext';
+import React from "react";
+import Image from "next/image";
+import confetti from "canvas-confetti";
 
 interface KidItemProps {
-  id: number;
-  name?: string;
-  price?: number;
-  imageSrc?: string;
+  name: string;
+  price: number;
+  imgSrc?: string;
+  stock?: number;
+  uploadedBy?: string;
 }
 
-const KidItem: React.FC<KidItemProps> = ({ 
-  id, 
-  name = "New Toy", 
-  price = 100, 
-  imageSrc = "/assets/example-photo.jpeg" 
+const KidItem: React.FC<KidItemProps> = ({
+  name,
+  price,
+  imgSrc = "/assets/example-photo.jpeg",
+  stock = 1,
+  uploadedBy,
 }) => {
-    const { globalProgress, purchaseItem, isItemPurchased } = useShopState();
-    const isPurchased = isItemPurchased(id);
-    const [showConfirm, setShowConfirm] = useState(false);
+  // const progressPercent = 40;
 
-    const handleClick = () => {
-        if (isPurchased) return; // Don't allow clicking if already purchased
-        setShowConfirm(true);
-    };
+  // This is the amount of money the user currently has (link to DB later)
+  const userMoney = 10; // example value
 
-    const handleConfirmPurchase = () => {
-        // Trigger confetti
-        confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 }
-        });
-        
-        // Purchase the item
-        purchaseItem(id);
-        setShowConfirm(false);
-    };
+  // Determine background color based on whether user has enough money
+  const canBuy = userMoney >= price;
+  const buttonBgColor = canBuy ? "bg-green-500" : "bg-red-500";
 
-    const handleCancel = () => {
-        setShowConfirm(false);
-    };
+  const isPurchased = false;
+  const globalProgress = 40;
 
-    return (
-        <div className="relative w-72 mx-auto p-2">
-            {/* Bottom wooden carton background */}
-            <Image
-                src="/assets/full-wooden-carton.png"
-                alt="Wooden Box Background"
-                fill
-                className="absolute bottom-0 left-1/2 transform translate-y-1/4 z-10"
-            />
+  const handleClick = () => {
+    if (isPurchased) return;
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
+    console.log(`Clicked on ${name}`);
+  };
 
-            {/* entire item container */}
-            <div 
-                className={`relative z-20 w-55 h-55 bg-white shadow-2xl rounded-4xl mx-auto my-4 p-4 cursor-pointer transition-all duration-300 ${
-                    isPurchased ? 'opacity-50 pointer-events-none' : 'hover:scale-105'
-                }`}
-                onClick={handleClick}
-            >
-                {/* text describing what the item is */}
-                <div className="p-1">
-                    <span className="text-md font-semibold">{name}</span>
-                </div>
+  return (
+    <div className="relative w-72 mx-auto p-2">
+      {/* Bottom wooden carton background */}
+      <Image
+        src="/assets/full-wooden-carton.png"
+        alt="Wooden Box Background"
+        fill
+        className="absolute bottom-0 left-1/2 transform translate-y-1/4 z-10"
+      />
 
-                {/* image showing the item */}
-                <Image
-                    src={imageSrc}
-                    alt="Item"
-                    width={0}
-                    height={0}
-                    className="rounded-2xl justify-center w-full h-15 object-cover p-2"
-                />
-
-                {/* progress bar */}
-                <div className="w-full px-2 pb-2 pt-4">
-                    <div className="w-full h-3 bg-gray-200 rounded-full">
-                        <div
-                            className="h-full bg-green-800 rounded-full transition-all duration-300"
-                            style={{ width: `${globalProgress}%` }}
-                        />
-                    </div>
-                </div>
-
-            </div>
-            <div className="absolute bottom-0 left-1/2 z-20 -translate-x-1/2 translate-y-1/2 w-[285px] h-[160px] rounded-3xl overflow-hidden">
-                <Image
-                    src="/assets/top-wooden-carton.png"
-                    alt="Top Wooden Carton"
-                    fill
-                    className=""
-                />
-            </div>
-            <div className="absolute bottom-0 left-1/4 z-20 -translate-x-6 -translate-y-1 w-[100px] h-[80px] rounded-3xl">
-                <Image
-                    src="/assets/coin.png"
-                    alt="Coin"
-                    fill
-                    className=""
-                />
-                <span className="absolute bottom-0 transform translate-x-20 -translate-y-6 text-white text-2xl font-semibold">
-                    : ${price}
-                </span>
-
-            </div>
-
-            {/* Confirmation Popup */}
-            {showConfirm && (
-                <div className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
-                    <div className="bg-white rounded-3xl p-6 mx-4 max-w-sm w-full shadow-2xl">
-                        <h3 className="text-xl font-bold text-center mb-4 text-gray-800">
-                            Confirm Purchase
-                        </h3>
-                        <p className="text-center mb-6 text-gray-600">
-                            Are you sure you want to buy <span className="font-semibold">{name}</span> for <span className="font-semibold">${price}</span>?
-                        </p>
-                        <div className="flex gap-3">
-                            <button
-                                onClick={handleCancel}
-                                className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded-2xl transition-colors"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                onClick={handleConfirmPurchase}
-                                className="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-2xl transition-colors"
-                            >
-                                Buy
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+      {/* entire item container */}
+      <div 
+        className={`relative z-20 w-55 h-55 bg-white shadow-2xl rounded-4xl mx-auto my-4 p-4 cursor-pointer transition-all duration-300 ${
+          isPurchased ? 'opacity-50 pointer-events-none' : 'hover:scale-105'
+        }`}
+        onClick={handleClick}
+      >
+        {/* text describing what the item is */}
+        <div className="p-1">
+          <span className="text-md font-semibold">{name}</span>
+          {uploadedBy && (
+            <span className="text-sm text-gray-500">Uploaded by {uploadedBy}</span>
+          )}
         </div>
-    )
-}
 
-export default KidItem
+        {/* image showing the item */}
+        {imgSrc !== "" && (
+          <Image
+            src={imgSrc}
+            alt="Item"
+            width={0}
+            height={0}
+            className="rounded-2xl justify-center w-full h-15 object-cover p-2"
+          />
+        )}
+
+        {/* progress bar */}
+        <div className="w-full px-2 pb-2 pt-4">
+          <div className="w-full h-3 bg-gray-200 rounded-full">
+            <div
+              className="h-full bg-green-800 rounded-full transition-all duration-300"
+              style={{ width: `${globalProgress}%` }}
+            />
+          </div>
+        </div>
+
+        {stock > 1 && (
+          <div className="text-2xl text-gray-600 text-right pr-2">x{stock}</div>
+        )}
+      </div>
+      <div className="absolute bottom-0 left-1/2 z-20 -translate-x-1/2 translate-y-4/10 w-[285px] h-[160px] rounded-3xl overflow-hidden">
+        <Image
+          src="/assets/top-wooden-carton.png"
+          alt="Top Wooden Carton"
+          fill
+          className=""
+        />
+      </div>
+
+      {/* Price container with dynamic background color */}
+      <div
+        className={`absolute bottom-0 left-1/4 z-20 -translate-x-6 -translate-y-1 w-[200px] h-[80px] rounded-3xl ${buttonBgColor} border-4 border-black flex items-center justify-center gap-2`}
+      >
+        <Image
+          src="/assets/coin.png"
+          alt="Coin"
+          width={60}
+          height={60}
+          className=""
+        />
+        <span className="text-black text-2xl font-semibold select-none">
+          : ${price}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+
+export default KidItem;

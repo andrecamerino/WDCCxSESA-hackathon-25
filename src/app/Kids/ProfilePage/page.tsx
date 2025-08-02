@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import UserProfile from '../Components/UserProfile'; // relative import from same folder
+import UserProfile from '../../Components/UserProfile'; // relative import from same folder
 
 export default function Page() {
   const handleLogout = () => {

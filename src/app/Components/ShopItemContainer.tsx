@@ -1,18 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import KidItem from './KidItem';
-import { useShopState } from './ShopStateContext';
+
+type ShopItem = {
+  _id: string;
+  name: string;
+  price: number;
+  imgSrc?: string;
+  stock?: number;
+  createdAt: string;
+};
 
 const ShopItemContainer = () => {
-  const { filters, addFilter, removeFilter, clearFilters } = useShopState();
+  const [items, setItems] = useState<ShopItem[]>([]);
+  const filters: string[] = [];
+  const addFilter = (filter: string) => {};
+  const removeFilter = (filter: string) => {};
+  const clearFilters = () => {};
 
-  // Sample shop data
-  const shopItems = [
-    { id: 1, name: "Golden Apple", price: 100, imageSrc: "/assets/example-photo.jpeg" },
-    { id: 2, name: "Magic Potion", price: 50, imageSrc: "/assets/example-photo.jpeg" },
-    { id: 3, name: "Dragon Scale", price: 250, imageSrc: "/assets/example-photo.jpeg" },
-    { id: 4, name: "Mystic Orb", price: 500, imageSrc: "/assets/example-photo.jpeg" },
-    { id: 5, name: "Phoenix Feather", price: 300, imageSrc: "/assets/example-photo.jpeg" },
-  ];
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch("/api/shopItems");
+        const data = await response.json();
+        setItems(data);
+      } catch (error) {
+        console.error("Error fetching shop items:", error);
+      }
+    };
+
+    fetchItems();
+  }, []);
 
   const availableFilters = ["Toys", "Books", "Electronics", "Clothing", "Food"];
 
@@ -20,22 +37,25 @@ const ShopItemContainer = () => {
     <div className="flex flex-col items-center px-4 pt-10 h-screen overflow-hidden">
       {/* Shop Items - Scrollable Container */}
       <div className="flex flex-col items-center space-y-4 w-full max-w-md flex-1 overflow-y-auto pb-48">
-        {shopItems.map((item) => (
-          <KidItem
-            key={item.id}
-            id={item.id}
-            name={item.name}
-            price={item.price}
-            imageSrc={item.imageSrc}
-          />
-        ))}
+        {items
+          .slice()
+          .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+          .map((item) => (
+            <KidItem
+              key={item._id}
+              name={item.name}
+              price={item.price}
+              imgSrc={item.imgSrc}
+              stock={item.stock}
+            />
+          ))}
       </div>
 
       {/* Filters Section at Bottom - Fixed */}
       <div className="w-full max-w-md fixed bottom-4 left-1/2 transform -translate-x-1/2 z-10">
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
           <h3 className="text-lg font-semibold mb-3 text-gray-800">Filters</h3>
-          
+
           {/* Active Filters */}
           {filters.length > 0 && (
             <div className="mb-3">
@@ -79,7 +99,7 @@ const ShopItemContainer = () => {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default ShopItemContainer

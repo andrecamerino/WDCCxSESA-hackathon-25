@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import Image from 'next/image';
-import Confetti from 'react-confetti';
-import { useWindowSize } from '@react-hook/window-size';
+import React, { useState } from "react";
+import Image from "next/image";
+import Confetti from "react-confetti";
+import { useWindowSize } from "@react-hook/window-size";
 
 const Login = () => {
   const [loginType, setLoginType] = useState<string | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [piggySrc, setPiggySrc] = useState('/assets/piggy.png');
-  const [piggyAnimClass, setPiggyAnimClass] = useState('');
+  const [piggySrc, setPiggySrc] = useState("/assets/piggy.png");
+  const [piggyAnimClass, setPiggyAnimClass] = useState("");
   const [showSmallPiggy, setShowSmallPiggy] = useState(false);
-  const [smallPiggyAnimClass, setSmallPiggyAnimClass] = useState('');
+  const [smallPiggyAnimClass, setSmallPiggyAnimClass] = useState("");
 
   const [showConfetti, setShowConfetti] = useState(false);
   const [width, height] = useWindowSize();
@@ -22,13 +22,13 @@ const Login = () => {
     setShowSmallPiggy(false);
 
     setTimeout(() => {
-      setPiggyAnimClass('animate-roll-right-back');
+      setPiggyAnimClass("animate-roll-right-back");
       setLoginType(type);
 
-      if (type === 'kids') {
+      if (type === "kids") {
         setTimeout(() => {
           setShowSmallPiggy(true);
-          setSmallPiggyAnimClass('animate-roll-right-back');
+          setSmallPiggyAnimClass("animate-roll-right-back");
         }, 100);
       }
     }, 1000);
@@ -44,24 +44,26 @@ const Login = () => {
         <Confetti
           width={width}
           height={height}
-          gravity={0.3}           // makes it fall faster
-          numberOfPieces={600}    // more confetti!
-          recycle={false}         // one-time burst
+          gravity={0.3} // makes it fall faster
+          numberOfPieces={600} // more confetti!
+          recycle={false} // one-time burst
         />
       )}
 
       {/* Bottom-right text */}
       <p className="absolute bottom-4 right-4 text-xs text-black">
-        Don't have an account? <span className="underline cursor-pointer hover:text-gray-700">Sign up!</span>
+        {"Don't have an account? "}
+        <span className="underline cursor-pointer hover:text-gray-700">
+          Sign up!
+        </span>
       </p>
 
       <h1 className="title text-3xl font-bold text-center mb-20 sm:text-4xl sm:mb-10">
-        PiggyQuest{' '}
-        {loginType === 'kids' && (
+        PiggyQuest{" "}
+        {loginType === "kids" && (
           <span className="text-sm font-normal align-top">kids</span>
         )}
       </h1>
-
 
       {/* Piggy display */}
       <div className="relative flex justify-center mb-12 sm:mb-16">
@@ -93,17 +95,17 @@ const Login = () => {
         {/* Buttons */}
         <div
           className={`flex flex-col items-center gap-6 sm:gap-8 transition-opacity duration-300 ${
-            loginType ? 'opacity-0 pointer-events-none' : 'opacity-100'
+            loginType ? "opacity-0 pointer-events-none" : "opacity-100"
           }`}
         >
           <button
-            onClick={() => selectLoginType('parents')}
+            onClick={() => selectLoginType("parents")}
             className="login-button bg-green-300 hover:bg-green-400 text-base font-bold py-3 px-6 rounded-full shadow-md w-full sm:text-lg sm:py-4 sm:px-8 transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
           >
             Parents Login
           </button>
           <button
-            onClick={() => selectLoginType('kids')}
+            onClick={() => selectLoginType("kids")}
             className="login-button bg-green-300 hover:bg-green-400 text-base font-bold py-3 px-6 rounded-full shadow-md w-full sm:text-lg sm:py-4 sm:px-8 transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
           >
             Kids Login
@@ -116,27 +118,28 @@ const Login = () => {
             className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-white bg-opacity-90 rounded-2xl p-6 shadow-xl border border-green-200"
             onSubmit={(e) => {
               e.preventDefault();
-              setPiggySrc('/assets/piggywink.png');
+              setPiggySrc("/assets/piggywink.png");
               setShowConfetti(true);
 
               setTimeout(() => {
                 setShowConfetti(false);
+                if (loginType === "parents") {
+                  window.location.href = "/Parents/HomePage";
+                } else if (loginType === "kids") {
+                  window.location.href = "/Kids/HomePage";
+                }
               }, 3000);
             }}
           >
             <input
               type="email"
               placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               required
               className="login-input w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400"
             />
             <input
               type="password"
               placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               required
               className="login-input w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400"
             />
@@ -150,7 +153,7 @@ const Login = () => {
               type="button"
               onClick={() => {
                 setLoginType(null);
-                setPiggySrc('/assets/piggy.png');
+                setPiggySrc("/assets/piggy.png");
                 setShowSmallPiggy(false);
               }}
               className="mt-2 text-sm text-green-600 hover:underline"

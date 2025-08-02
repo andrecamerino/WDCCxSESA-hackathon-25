@@ -19,7 +19,6 @@ const Page = () => {
   return (
     <div style={{ backgroundColor: '#D4EEFF', minHeight: '100vh' }}>
       <div style={contentWrapperStyle}>
-        <ParentHeader />
         <Image
           src="/assets/piggy.png"
           alt="Piggy Quest"

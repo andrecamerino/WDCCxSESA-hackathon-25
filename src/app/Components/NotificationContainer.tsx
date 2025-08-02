@@ -3,11 +3,13 @@ import Notification from "./Notification";
 
 const NotificationContainer = () => {
   return (
-    <div className="flex flex-col items-center rounded-3xl">
-      <div className="w-full max-w-md max-h-96 overflow-y-auto space-y-2">
-        <Notification type="task" person="Mum" />
-        <Notification type="task" person="Mum" />
-        <Notification type="task" person="Dad" />
+    <div className="flex flex-col items-center rounded-3xl gap-4">
+      <h1 className="text-3xl">Notifications</h1>
+      <h3 className="text-xl">From the last 24 hours</h3>
+      <div className="w-full max-w-md max-h-150 pb-100 overflow-y-auto space-y-2">
+        <Notification type="quest" person="Mum" />
+        <Notification type="quest" person="Mum" />
+        <Notification type="quest" person="Dad" />
         <Notification type="shop" person="Mum" />
         <Notification type="shop" person="Uncle" />
         <Notification type="save" item="a skateboard" />

@@ -44,7 +44,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
           <div className="text-2xl font-bold tracking-wide lowercase">{username}</div>
 
         {/* Account info card */}
-        <div className="bg-white text-black rounded-xl px-4 py-4 w-80 flex items-center shadow-lg mt-4">
+        <div className="bg-white text-black rounded-xl px-4 py-4 w-80 flex items-center shadow-lg mt-4 border-6 border-black">
           {/* Left: Coin icon and balance */}
           <div className="flex flex-col items-center w-20 space-y-2">
             <Image
@@ -80,12 +80,13 @@ const UserProfile: React.FC<UserProfileProps> = ({
         </div>
 
           {/* Logout */}
-          <button
+          <a
+            href="/Login"
             onClick={onLogout}
-            className="text-white underline text-sm cursor-pointer mt-3"
+            className="mt-4 px-4 py-2 bg-red-600 text-black text-2xl font-bold rounded-xl border-4 border-black hover:bg-red-700 transition-colors duration-200"
           >
-            log out
-          </button>
+            Log Out
+          </a>
         </div>
       </div>
 

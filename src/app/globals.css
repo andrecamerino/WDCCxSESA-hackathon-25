@@ -53,3 +53,44 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes rollLeft {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  100% {
+    transform: translateX(-150vw) rotate(-720deg);
+  }
+}
+
+@keyframes rollRightBack {
+  0% {
+    transform: translateX(150vw) rotate(720deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+.animate-roll-left {
+  animation: rollLeft 1s ease-in-out forwards;
+}
+
+.animate-roll-right-back {
+  animation: rollRightBack 1s ease-in-out forwards;
+}
+
+@keyframes rollIn {
+  0% {
+    transform: translateX(-100px) rotate(-360deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.animate-roll-in {
+  animation: rollIn 0.8s ease-out forwards;
+}

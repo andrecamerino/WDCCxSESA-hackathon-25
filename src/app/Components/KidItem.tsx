@@ -49,26 +49,20 @@ const KidItem: React.FC<KidItemProps> = ({
         className="absolute bottom-0 left-1/2 transform translate-y-1/4 z-10"
       />
 
-            {/* entire item container */}
-            <div 
-                className={`relative z-20 w-55 h-55 bg-white shadow-2xl rounded-4xl mx-auto my-4 p-4 cursor-pointer transition-all duration-300 ${
-                    isPurchased ? 'opacity-50 pointer-events-none' : 'hover:scale-105'
-                }`}
-                onClick={handleClick}
-            >
-            <div 
-                className={`relative z-20 w-55 h-55 bg-white shadow-2xl rounded-4xl mx-auto my-4 p-4 cursor-pointer transition-all duration-300 ${
-                    isPurchased ? 'opacity-50 pointer-events-none' : 'hover:scale-105'
-                }`}
-                onClick={handleClick}
-            >
-                {/* text describing what the item is */}
-                <div className="p-1">
-                    <span className="text-md font-semibold">{name}</span>
-                    {uploadedBy && (
-                      <span className="text-sm text-gray-500">Uploaded by {uploadedBy}</span>
-                    )}
-                </div>
+      {/* entire item container */}
+      <div 
+        className={`relative z-20 w-55 h-55 bg-white shadow-2xl rounded-4xl mx-auto my-4 p-4 cursor-pointer transition-all duration-300 ${
+          isPurchased ? 'opacity-50 pointer-events-none' : 'hover:scale-105'
+        }`}
+        onClick={handleClick}
+      >
+        {/* text describing what the item is */}
+        <div className="p-1">
+          <span className="text-md font-semibold">{name}</span>
+          {uploadedBy && (
+            <span className="text-sm text-gray-500">Uploaded by {uploadedBy}</span>
+          )}
+        </div>
 
         {/* image showing the item */}
         {imgSrc !== "" && (
@@ -122,5 +116,6 @@ const KidItem: React.FC<KidItemProps> = ({
     </div>
   );
 };
+
 
 export default KidItem;

@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import confetti from 'canvas-confetti';
-import { useShopState } from './ShopStateContext';
 
 type ShopItem = {
   id: number;
@@ -9,24 +8,22 @@ type ShopItem = {
   value: number;
   imgSrc?: string;
   details?: string;
+  isPurchased: boolean;
+  globalProgress: number;
+  onPurchase: (id: number) => void;
 };
 
-const ParentShopItem: React.FC<ShopItem> = ({ id, name, value, imgSrc, details }) => {
-  const { globalProgress, purchaseItem, isItemPurchased } = useShopState();
-  const isPurchased = isItemPurchased(id);
-
+const ParentShopItem: React.FC<ShopItem> = ({ id, name, value, imgSrc, details, isPurchased, globalProgress, onPurchase }) => {
   const handleClick = () => {
-    if (isPurchased) return; // Don't allow clicking if already purchased
-    
-    // Trigger confetti
+    if (isPurchased) return;
+
     confetti({
       particleCount: 100,
       spread: 70,
       origin: { y: 0.6 }
     });
-    
-    // Purchase the item
-    purchaseItem(id);
+
+    onPurchase(id);
   };
 
   return (

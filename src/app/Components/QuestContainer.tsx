@@ -13,20 +13,29 @@ type Quest = {
 
 const QuestContainer: React.FC = () => {
   const [quests, setQuests] = useState<Quest[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const refreshQuests = async () => {
+    try {
+      const response = await fetch("/api/quests");
+      const data = await response.json();
+      setQuests(data);
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching quests:", err);
+      setError("Failed to load quests");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchQuests = async () => {
-      try {
-        const response = await fetch("/api/quests");
-        const data = await response.json();
-        setQuests(data);
-      } catch (error) {
-        console.error("Error fetching quests:", error);
-      }
-    };
-
-    fetchQuests();
+    refreshQuests();
   }, []);
+
+  if (loading) return <p>Loading quests...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
 
   return (
     <div className="flex flex-col gap-2 w-full max-w-md max-h-[600px] overflow-y-auto rounded-t-3xl">

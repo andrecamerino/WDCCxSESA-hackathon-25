@@ -5,7 +5,6 @@ import { useWindowSize } from "@react-hook/window-size";
 
 const Login = () => {
   const [loginType, setLoginType] = useState<string | null>(null);
-  const [loginType, setLoginType] = useState<string | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 

@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import confetti from 'canvas-confetti';
-import { useShopState } from './ShopStateContext';
 
 type ShopItem = {
   id: number;
@@ -12,8 +11,12 @@ type ShopItem = {
 };
 
 const ParentShopItem: React.FC<ShopItem> = ({ id, name, value, imgSrc, details }) => {
-  const { globalProgress, purchaseItem, isItemPurchased } = useShopState();
-  const isPurchased = isItemPurchased(id);
+  const isPurchased = false;
+  const globalProgress = 60; // Example static progress value
+
+  const purchaseItem = (itemId: number) => {
+    console.log(`Purchased item ${itemId}`);
+  };
 
   const handleClick = () => {
     if (isPurchased) return; // Don't allow clicking if already purchased

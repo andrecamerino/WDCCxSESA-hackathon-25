@@ -3,7 +3,7 @@ import { GoHome } from "react-icons/go";
 
 const Navbar = () => {
   return (
-    <div className="fixed bottom-0 w-full bg-white border-t border-gray-200 flex justify-around items-center py-3 z-50 h-[100px] text-2xl">
+    <div className="fixed bottom-0 w-full bg-white border-t border-gray-200 flex justify-around items-center py-3 z-999 h-[100px] text-2xl">
       <a href="/QuestPage" className="text-gray-700 text-center">
         Quest
       </a>
@@ -16,7 +16,7 @@ const Navbar = () => {
       >
         <GoHome className="text-white text-4xl" />
       </a>
-      <a href="/ShopPage" className="text-gray-700 text-center">
+      <a href="/KidsShop" className="text-gray-700 text-center">
         Shop
       </a>
     </div>

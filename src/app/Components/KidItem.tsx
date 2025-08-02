@@ -60,12 +60,7 @@ const KidItem = () => {
                 </span>
 
             </div>
-
-
-
         </div>
-
-
     )
 }
 

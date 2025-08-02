@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import QuestList from '../Components/questList';
+import QuestList from '../Components/QuestList';
 import { useState } from 'react';
 import "../globals.css";
 import {quests as initialQuests} from "../data/QuestList"

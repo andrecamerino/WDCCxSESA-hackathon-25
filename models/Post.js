@@ -13,4 +13,5 @@ const postSchema = new Schema({
     },
 }, {timestamps: true});
 
-export default mongoose.model("Post", postSchema);
+// looks for Post model, if it doesnt exist it makes a new model
+export default mongoose.models.Post || mongoose.model("Post", postSchema);

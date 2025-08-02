@@ -1,9 +1,10 @@
+// src/data/QuestList.ts
+
 export type Quest = {
   title: string;
   completed: boolean;
 };
 
-// createQuest is the function that actually creates the quest
 export function createQuest(title: string): Quest {
   return {
     title,
@@ -11,8 +12,14 @@ export function createQuest(title: string): Quest {
   };
 }
 
-export const quests: Quest[] = [
-  createQuest('Feed the pet'),
-  createQuest('Clean your room'),
-  createQuest('Brush your teeth'),
-];
+const QUESTS_KEY = 'quests';
+
+export function loadQuests(): Quest[] {
+  if (typeof window === 'undefined') return [];
+  const stored = localStorage.getItem(QUESTS_KEY);
+  return stored ? JSON.parse(stored) : [];
+}
+
+export function saveQuests(quests: Quest[]) {
+  localStorage.setItem(QUESTS_KEY, JSON.stringify(quests));
+}

@@ -1,32 +1,26 @@
-"use client";
+'use client';
 
-import React from 'react';
+import { useEffect, useState } from 'react';
+import { loadQuests, saveQuests, type Quest } from '../data/QuestList';
 import QuestList from '../Components/questList';
-import { useState } from 'react';
-import "../globals.css";
-import {quests as initialQuests} from "../data/QuestList"
-import type {Quest} from "../data/QuestList"
 
-const HomePage: React.FC = () => {
-  const [quests, setQuests] = useState<Quest[]>(initialQuests);
+export default function ChildQuestPage() {
+  const [quests, setQuests] = useState<Quest[]>([]);
+
+  useEffect(() => {
+    setQuests(loadQuests());
+  }, []);
 
   const toggleQuest = (index: number) => {
-    setQuests((prev) =>
-      // This switches button state between done and not done
-      prev.map((quest, i) =>
-        i === index ? { ...quest, completed: !quest.completed } : quest
-      )
-    );
+    const updated = [...quests];
+    updated[index].completed = !updated[index].completed;
+    setQuests(updated);
+    saveQuests(updated);
   };
 
   return (
-    <>
     <div className="min-h-screen bg-[url('/assets/background.png')] bg-fixed bg-center flex flex-col items-center px-4 py-3">
-      {/* You can put header/nav here if needed */}
       <QuestList quests={quests} toggleQuest={toggleQuest} />
     </div>
-    </>
   );
-};
-
-export default HomePage;
+}

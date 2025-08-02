@@ -2,7 +2,8 @@
 
 /* styles/globals.css */
 html, body {
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   height: 100%;
 }
 

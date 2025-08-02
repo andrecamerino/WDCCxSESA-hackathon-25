@@ -20,10 +20,7 @@ const HomePage: React.FC = () => {
 
   return (
     <>
-    <div>
-      <h1 className='bg---primary-background flex flex-col items-center px-4 py-4'>Piggy Quest</h1>
-    </div>
-    <div className="min-h-screen bg---primary-background flex flex-col items-center px-4 py-3">
+    <div className="min-h-screen bg-[url('/assets/background.png')] bg-fixed bg-center flex flex-col items-center px-4 py-3">
       {/* You can put header/nav here if needed */}
       <QuestList quests={quests} toggleQuest={toggleQuest} />
     </div>

@@ -29,6 +29,8 @@ html, body {
   --child-secondary-background: var(--secondary-background);
 
   --background: var(--primary-background);
+
+  font-family: var(--font-sour-gummy), sans-serif;
 }
 
 @theme inline {

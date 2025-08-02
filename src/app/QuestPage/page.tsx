@@ -1,31 +1,49 @@
 "use client";
 
-import React from 'react';
-import QuestList from '../Components/QuestList';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import QuestList from '../Components/QuestContainer';
 import "../globals.css";
-import {quests as initialQuests} from "../data/QuestList"
-import type {Quest} from "../data/QuestList"
+import { getQuests, toggleQuestCompletion } from "../data/QuestList";
+import type { Quest } from "../data/QuestList";
 
 const HomePage: React.FC = () => {
-  const [quests, setQuests] = useState<Quest[]>(initialQuests);
+  const [quests, setQuests] = useState<Quest[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const toggleQuest = (index: number) => {
-    setQuests((prev) =>
-      // This switches button state between done and not done
-      prev.map((quest, i) =>
-        i === index ? { ...quest, completed: !quest.completed } : quest
-      )
-    );
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await getQuests();
+        setQuests(data);
+      } catch (err) {
+        console.error("Failed to load quests:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
+
+  const handleToggle = async (index: number) => {
+    const quest = quests[index];
+    const updated = { ...quest, completed: !quest.completed };
+
+    try {
+      await toggleQuestCompletion(quest.id, updated.completed);
+      setQuests(prev =>
+        prev.map((q, i) => (i === index ? updated : q))
+      );
+    } catch (err) {
+      console.error("Failed to update quest:", err);
+    }
   };
 
+  if (loading) return <div className="text-white">Loading...</div>;
+
   return (
-    <>
     <div className="pt-30 min-h-screen bg-[url('/assets/background.png')] bg-fixed bg-center flex flex-col items-center px-4 py-3">
-      {/* You can put header/nav here if needed */}
-      <QuestList quests={quests} toggleQuest={toggleQuest} />
+      <QuestList quests={quests} toggleQuest={handleToggle} />
     </div>
-    </>
   );
 };
 

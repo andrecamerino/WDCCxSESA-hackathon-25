@@ -16,7 +16,7 @@ const Navbar = () => {
       >
         <GoHome className="text-white text-4xl" />
       </a>
-      <a href="/ShopPage" className="text-gray-700 text-center">
+      <a href="/KidsShop" className="text-gray-700 text-center">
         Shop
       </a>
     </div>

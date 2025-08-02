@@ -1,15 +1,37 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Confetti from 'react-confetti';
+import { useWindowSize } from '@react-hook/window-size';
 
 const Login = () => {
   const [loginType, setLoginType] = useState(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [piggySrc, setPiggySrc] = useState('/assets/piggy.png');
+  const [piggyAnimClass, setPiggyAnimClass] = useState('');
+  const [showSmallPiggy, setShowSmallPiggy] = useState(false);
+  const [smallPiggyAnimClass, setSmallPiggyAnimClass] = useState('');
+
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [width, height] = useWindowSize();
+
   const selectLoginType = (type) => {
-    setLoginType(type);
-    setEmail('');
-    setPassword('');
+    setPiggyAnimClass('animate-roll-left');
+    setSmallPiggyAnimClass('');
+    setShowSmallPiggy(false);
+
+    setTimeout(() => {
+      setPiggyAnimClass('animate-roll-right-back');
+      setLoginType(type);
+
+      if (type === 'kids') {
+        setTimeout(() => {
+          setShowSmallPiggy(true);
+          setSmallPiggyAnimClass('animate-roll-right-back');
+        }, 100);
+      }
+    }, 1000);
   };
 
   return (
@@ -17,29 +39,58 @@ const Login = () => {
       className="login-page bg-cover bg-center min-h-screen flex flex-col justify-center items-center px-4"
       style={{ backgroundImage: "url('/assets/background.png')" }}
     >
-    
+      {/* 🎉 Confetti Explosion */}
+      {showConfetti && (
+        <Confetti
+          width={width}
+          height={height}
+          gravity={0.3}           // makes it fall faster
+          numberOfPieces={600}    // more confetti!
+          recycle={false}         // one-time burst
+        />
+      )}
+
       {/* Bottom-right text */}
       <p className="absolute bottom-4 right-4 text-xs text-black">
         Don't have an account? <span className="underline cursor-pointer hover:text-gray-700">Sign up!</span>
       </p>
 
       <h1 className="title text-3xl font-bold text-center mb-20 sm:text-4xl sm:mb-10">
-        PiggyQuest <span className="text-sm font-normal align-top">kids</span>
+        PiggyQuest{' '}
+        {loginType === 'kids' && (
+          <span className="text-sm font-normal align-top">kids</span>
+        )}
       </h1>
 
+
+      {/* Piggy display */}
       <div className="relative flex justify-center mb-12 sm:mb-16">
-        <Image
-          src="/assets/piggy.png"
-          alt="Piggy"
-          width={250}
-          height={150}
-          className="piggy-image transition-transform duration-300 ease-in-out hover:scale-110"
-        />
+        <div className="relative flex items-end gap-2">
+          {/* Big Piggy */}
+          <Image
+            src={piggySrc}
+            alt="Piggy"
+            width={250}
+            height={150}
+            className={`piggy-image transition-transform duration-300 ease-in-out hover:scale-110 ${piggyAnimClass}`}
+          />
+
+          {/* Small Piggy (same image, resized) */}
+          {showSmallPiggy && (
+            <Image
+              src={piggySrc}
+              alt="Small Piggy"
+              width={100}
+              height={60}
+              className={`transition-transform duration-300 ease-in-out ${smallPiggyAnimClass}`}
+            />
+          )}
+        </div>
       </div>
 
-      {/* Container with fixed height to prevent layout shift */}
+      {/* Button/Form Container */}
       <div className="button-form-container relative w-full max-w-xs min-h-[250px]">
-        {/* Buttons container */}
+        {/* Buttons */}
         <div
           className={`flex flex-col items-center gap-6 sm:gap-8 transition-opacity duration-300 ${
             loginType ? 'opacity-0 pointer-events-none' : 'opacity-100'
@@ -59,48 +110,55 @@ const Login = () => {
           </button>
         </div>
 
-        {/* Login form container, absolute positioned on top */}
-        {/* Login form container, absolute positioned on top */}
-{loginType && (
-  <form
-    className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-white bg-opacity-90 rounded-2xl p-6 shadow-xl border border-green-200"
-    onSubmit={(e) => {
-      e.preventDefault();
-      alert(`Logging in as ${loginType} with email: ${email}`);
-    }}
-  >
-    <input
-      type="email"
-      placeholder="Email"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-      required
-      className="login-input w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400"
-    />
-    <input
-      type="password"
-      placeholder="Password"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-      required
-      className="login-input w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400"
-    />
-    <button
-      type="submit"
-      className="login-button bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full shadow-md w-full sm:text-lg sm:py-4 sm:px-8 transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
-    >
-      Login
-    </button>
-    <button
-      type="button"
-      onClick={() => setLoginType(null)}
-      className="mt-2 text-sm text-green-600 hover:underline"
-    >
-      Back
-    </button>
-  </form>
-)}
+        {/* Login Form */}
+        {loginType && (
+          <form
+            className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-white bg-opacity-90 rounded-2xl p-6 shadow-xl border border-green-200"
+            onSubmit={(e) => {
+              e.preventDefault();
+              setPiggySrc('/assets/piggywink.png');
+              setShowConfetti(true);
 
+              setTimeout(() => {
+                setShowConfetti(false);
+              }, 3000);
+            }}
+          >
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="login-input w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="login-input w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+            />
+            <button
+              type="submit"
+              className="login-button bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full shadow-md w-full sm:text-lg sm:py-4 sm:px-8 transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
+            >
+              Login
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setLoginType(null);
+                setPiggySrc('/assets/piggy.png');
+                setShowSmallPiggy(false);
+              }}
+              className="mt-2 text-sm text-green-600 hover:underline"
+            >
+              Back
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );

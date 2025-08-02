@@ -40,11 +40,11 @@ const QuestItem: React.FC<Quest> = ({
     <div
       key={id}
       style={{ fontFamily: "var(--font-sour-gummy)" }}
-      className="rounded-[60px] bg-white shadow-[6px_10px_0px_rgba(0,0,0,0.2)] p-8 flex flex-col items-start"
+      className="rounded-[60px] bg-white shadow-[6px_10px_0px_rgba(0,0,0,0.2)] p-8 flex flex-col items-start border-6 border-black"
     >
       <div className="flex justify-between items-center w-full mb-4">
         <p className="text-lg">Quest from: {person}</p>
-        <div className="flex items-center justify-center bg-amber-200 rounded-full px-3 py-1 gap-x-2">
+        <div className="flex items-center justify-center bg-amber-200 rounded-full px-3 py-1 gap-x-2 border-6 border-black">
           <Image
             src="/assets/coin.png"
             alt="coin"
@@ -59,7 +59,7 @@ const QuestItem: React.FC<Quest> = ({
       <p className="font-bold text-2xl mb-5 text-center w-full">{task}</p>
 
       <button
-        className={`text-center w-full px-6 py-3 rounded-full 
+        className={`border-6 border-black text-center w-full px-6 py-3 rounded-full 
           shadow-[4px_3px_0px_rgba(0,0,0,0.2)] 
           active:shadow-[0px_0px_0px_rgba(0,0,0,0.2)] 
           active:translate-x-[3px] active:translate-y-[3px] 

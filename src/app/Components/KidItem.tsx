@@ -59,6 +59,9 @@ const KidItem: React.FC<KidItemProps> = ({
                 {/* text describing what the item is */}
                 <div className="p-1">
                     <span className="text-md font-semibold">{name}</span>
+                    {uploadedBy && (
+                      <span className="text-sm text-gray-500">Uploaded by {uploadedBy}</span>
+                    )}
                 </div>
 
         {/* image showing the item */}

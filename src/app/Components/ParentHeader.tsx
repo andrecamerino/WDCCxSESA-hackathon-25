@@ -7,7 +7,6 @@ const Header = () => {
     <div className="w-full bg-transparent">
       <div className="grid grid-cols-[1fr_1fr_1fr] justify-evenly items-center w-full py-8 text-2xl font-medium text-black">
         <a href="/ProfilePage" className="flex">
-
         </a>
         <a href="/Home" className="text-2xl">
           PiggyQuest

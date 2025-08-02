@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/image'; // Ensure you have the correct import for images
+import Image from 'next/image';
 
 type UserProfileProps = {
   username: string;
@@ -17,31 +17,19 @@ const UserProfile: React.FC<UserProfileProps> = ({
   onLogout,
 }) => {
   return (
-    <div
-      className="min-h-screen flex flex-col items-center justify-center relative font-squada-one text-white select-none"
-      style={{
-        backgroundImage: "url('/assets/userbackground.png')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }}
-    >
-      {/* Wooden planks background container */}
-      <div className="w-full max-w-xs h-[400px] rounded-t-3xl overflow-hidden relative items-center">
-        <div className="absolute inset-0 bg-center" />
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--parent-blue)] font-squada-one text-black select-none">
+      <div className="w-full max-w-xs h-[400px] rounded-t-3xl overflow-hidden flex flex-col items-center justify-center relative">
+        {/* User Icon */}
+        <Image
+          src="/assets/profile.png"
+          alt="User Icon"
+          className="rounded-full border-white shadow-lg"
+          width={140}
+          height={96}
+        />
 
-        <div className="relative z-10 flex flex-col items-center pt-12 space-y-4">
-          {/* User Icon */}
-          <Image
-            src="/assets/profile.png"
-            alt="User Icon"
-            className="rounded-full  border-white shadow-lg"
-            width={140}
-            height={96}
-          />
-
-          {/* Username */}
-          <div className="text-2xl font-bold tracking-wide lowercase">{username}</div>
+        {/* Username */}
+        <div className="text-2xl font-bold tracking-wide lowercase mt-4">{username}</div>
 
         {/* Account info card */}
         <div className="bg-white text-black rounded-xl px-4 py-4 w-80 flex items-center shadow-lg mt-4">
@@ -79,17 +67,14 @@ const UserProfile: React.FC<UserProfileProps> = ({
           </div>
         </div>
 
-          {/* Logout */}
-          <button
-            onClick={onLogout}
-            className="text-white underline text-sm cursor-pointer mt-3"
-          >
-            log out
-          </button>
-        </div>
+        {/* Logout */}
+        <button
+          onClick={onLogout}
+          className="text-black underline text-sm cursor-pointer mt-3"
+        >
+          log out
+        </button>
       </div>
-
-
     </div>
   );
 };

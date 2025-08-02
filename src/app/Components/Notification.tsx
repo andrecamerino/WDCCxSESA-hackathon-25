@@ -26,7 +26,7 @@ const Notification: React.FC<NotificationProps> = ({ type, person, item }) => {
     }
 
   return (
-    <div className="w-full bg-white h-[80px] rounded-4xl grid grid-cols-[50px_1fr] items-center px-4 text-xl shadow-[0_2px_6px_rgba(0,0,0,0.3)]">
+    <div className="w-auto bg-white h-[80px] rounded-4xl grid grid-cols-[50px_1fr] items-center mx-2 px-4 text-xl shadow-[6px_6px_0px_rgba(0,0,0,0.2)]">
       <div className="w-[50px] h-full flex items-center justify-center">
         {icon}
       </div>

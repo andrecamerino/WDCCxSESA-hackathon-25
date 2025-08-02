@@ -3,9 +3,16 @@ export type Quest = {
   completed: boolean;
 };
 
+// createQuest is the function that actually creates the quest
+export function createQuest(title: string): Quest {
+  return {
+    title,
+    completed: false,
+  };
+}
+
 export const quests: Quest[] = [
-  { title: 'Feed the pet', completed: false },
-  { title: 'Clean your room', completed: false  },
-  { title: 'Brush your teeth', completed: false },
-  { title: 'Find a stick', completed: false },
+  createQuest('Feed the pet'),
+  createQuest('Clean your room'),
+  createQuest('Brush your teeth'),
 ];

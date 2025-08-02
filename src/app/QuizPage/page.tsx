@@ -4,7 +4,8 @@ import React from 'react';
 import QuestList from '../Components/QuestList';
 import { useState } from 'react';
 import "../globals.css";
-import {quests as initialQuests, Quest} from "../data/QuestList"
+import {quests as initialQuests} from "../data/QuestList"
+import type {Quest} from "../data/QuestList"
 
 const HomePage: React.FC = () => {
   const [quests, setQuests] = useState<Quest[]>(initialQuests);

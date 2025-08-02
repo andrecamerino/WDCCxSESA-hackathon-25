@@ -11,10 +11,17 @@ interface ConditionalLayoutProps {
 export default function ConditionalLayout({ children }: ConditionalLayoutProps) {
   const pathname = usePathname();
   const isLoginPage = pathname === '/Login';
+  
+  // Define kids pages
+  const kidsPages = ['/Home', '/KidsShop', '/QuestPage', '/ProfilePage'];
+  const isKidsPage = kidsPages.includes(pathname);
+  
+  // Determine the title to show
+  const headerTitle = isKidsPage ? 'PiggyQuest Kids' : 'PiggyQuest';
 
   return (
     <>
-      {!isLoginPage && <Header />}
+      {!isLoginPage && <Header title={headerTitle} />}
       {children}
       {!isLoginPage && <Navbar />}
     </>

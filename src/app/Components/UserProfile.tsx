@@ -30,7 +30,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
       <div className="w-full max-w-xs h-[400px] rounded-t-3xl overflow-hidden relative items-center">
         <div className="absolute inset-0 bg-center" />
 
-        <div className="relative z-10 flex flex-col items-center pt-12 space-y-4">
+        <div className="relative z-10 flex flex-col items-center pt-1">
           {/* User Icon */}
           <Image
             src="/assets/profile.png"

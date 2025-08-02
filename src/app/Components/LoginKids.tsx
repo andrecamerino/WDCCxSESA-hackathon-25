@@ -17,6 +17,12 @@ const Login = () => {
       className="login-page bg-cover bg-center min-h-screen flex flex-col justify-center items-center px-4"
       style={{ backgroundImage: "url('/assets/background.png')" }}
     >
+    
+      {/* Bottom-right text */}
+      <p className="absolute bottom-4 right-4 text-xs text-black">
+        Don't have an account? <span className="underline cursor-pointer hover:text-gray-700">Sign up!</span>
+      </p>
+
       <h1 className="title text-3xl font-bold text-center mb-20 sm:text-4xl sm:mb-10">
         PiggyQuest <span className="text-sm font-normal align-top">kids</span>
       </h1>

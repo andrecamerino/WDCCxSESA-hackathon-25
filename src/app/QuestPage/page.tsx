@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import QuestList from '../Components/questList';
+import QuestList from '../Components/QuestList';
 import { useState } from 'react';
 import "../globals.css";
 import {quests as initialQuests} from "../data/QuestList"
@@ -21,7 +21,7 @@ const HomePage: React.FC = () => {
 
   return (
     <>
-    <div className="min-h-screen bg-[url('/assets/background.png')] bg-fixed bg-center flex flex-col items-center px-4 py-3">
+    <div className="pt-30 min-h-screen bg-[url('/assets/background.png')] bg-fixed bg-center flex flex-col items-center px-4 py-3">
       {/* You can put header/nav here if needed */}
       <QuestList quests={quests} toggleQuest={toggleQuest} />
     </div>

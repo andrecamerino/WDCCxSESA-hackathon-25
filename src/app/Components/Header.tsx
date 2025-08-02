@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Header = () => {
   return (
-    <div className="w-full bg-transparent">
+    <div className="w-full bg-transparent fixed">
       <div className="grid grid-cols-[1fr_1fr_1fr] justify-evenly items-center w-full py-8 text-2xl font-medium text-black">
         <a href="/ProfilePage" className="flex">
 

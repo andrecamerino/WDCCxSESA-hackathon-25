@@ -3,7 +3,7 @@ import Notification from "./Notification";
 
 const NotificationContainer = () => {
   return (
-    <div className="flex flex-col items-center px-4 py-6">
+    <div className="flex flex-col items-center rounded-3xl">
       <div className="w-full max-w-md max-h-96 overflow-y-auto space-y-2">
         <Notification type="task" person="Mum" />
         <Notification type="task" person="Mum" />

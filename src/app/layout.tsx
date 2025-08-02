@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Sour_Gummy } from "next/font/google";
-import "../globals.css";
+import "./globals.css";
+
+import Navbar from "./Components/Navbar";
+import Header from "./Components/Header";
 
 const sourGummy = Sour_Gummy({
   variable: "--font-sour-gummy",
@@ -21,7 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${sourGummy.className} antialiased`}>
+        <Header />
         {children}
+        <Navbar />
       </body>
     </html>
   );

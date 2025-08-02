@@ -94,3 +94,20 @@ body {
 .animate-roll-in {
   animation: rollIn 0.8s ease-out forwards;
 }
+
+@keyframes leftToRight {
+  0% {
+    transform: translateX(-300%);
+  }
+  100% {
+    transform: translateX(350%);
+  }
+}
+
+.animate-cloud-left-to-right {
+  animation: leftToRight 15s linear infinite;
+}
+
+.animate-cloud-left-to-right-slow {
+  animation: leftToRight 22s linear infinite;
+}

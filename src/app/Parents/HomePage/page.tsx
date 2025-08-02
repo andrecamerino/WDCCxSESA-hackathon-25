@@ -6,7 +6,7 @@ import ParentHeader from '../../Components/ParentHeader';
 import Image from 'next/image';
 
 const Page = () => {
-  // ✅ Hooks and state logic must go here inside the component
+  // Hooks and state logic must go here inside the component
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedChild, setSelectedChild] = useState('Evan');
   const children = ['Evan', 'Lily', 'Max'];

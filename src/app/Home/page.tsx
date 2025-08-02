@@ -1,8 +1,7 @@
 'use client';
 
 import React from 'react'
-import Navbar from '../Components/Navbar';
-import Header from '../Components/Header';
+
 import NotificationContainer from '../Components/NotificationContainer';
 import Image from 'next/image';
 
@@ -15,9 +14,8 @@ const Page = () => {
         backgroundPosition: 'center',
         minHeight: '100vh',
       }}
-      className='overflow-hidden'
+      className='overflow-hidden pt-20'
     >
-      <Header/>
       <Image
         src="/assets/piggy.png"
         alt="Piggy Quest"
@@ -26,7 +24,6 @@ const Page = () => {
         className="mx-auto mt-10"
       />
       <NotificationContainer />
-      <Navbar />
     </div>
   );
 };

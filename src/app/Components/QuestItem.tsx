@@ -17,6 +17,7 @@ const QuestItem: React.FC<Quest> = ({
   person,
 }) => {
   const [isCompleted, setIsCompleted] = useState(completed);
+  const [isCoinJumping, setIsCoinJumping] = useState(false);
 
   const toggleQuest = async () => {
     try {
@@ -30,7 +31,14 @@ const QuestItem: React.FC<Quest> = ({
 
       if (!response.ok) throw new Error("Failed to update quest");
 
-      setIsCompleted(!isCompleted);
+      const newCompletedState = !isCompleted;
+      setIsCompleted(newCompletedState);
+      
+      // Trigger coin jump animation when quest is completed
+      if (newCompletedState) {
+        setIsCoinJumping(true);
+        setTimeout(() => setIsCoinJumping(false), 1000); // Reset after animation
+      }
     } catch (error) {
       console.error("Error updating quest:", error);
     }
@@ -50,7 +58,12 @@ const QuestItem: React.FC<Quest> = ({
             alt="coin"
             width={40}
             height={24}
-            className="inline-block"
+            className={`inline-block transition-all duration-1000 ${
+              isCoinJumping ? 'animate-smooth-jump' : ''
+            }`}
+            style={{
+              animation: isCoinJumping ? 'smoothJump 1s ease-in-out' : 'none'
+            }}
           />
           <p className="text-lg">{reward}</p>
         </div>
@@ -70,6 +83,26 @@ const QuestItem: React.FC<Quest> = ({
       >
         {isCompleted ? "done" : "not done"}
       </button>
+
+      <style jsx>{`
+        @keyframes smoothJump {
+          0% {
+            transform: translateY(0px);
+          }
+          25% {
+            transform: translateY(-7px);
+          }
+          50% {
+            transform: translateY(-16px);
+          }
+          75% {
+            transform: translateY(-7px);
+          }
+          100% {
+            transform: translateY(0px);
+          }
+        }
+      `}</style>
     </div>
   );
 };

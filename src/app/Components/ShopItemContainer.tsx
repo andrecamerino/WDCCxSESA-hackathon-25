@@ -35,7 +35,7 @@ const ShopItemContainer = () => {
   return (
     <div className="flex flex-col items-center px-4 pt-10 h-screen overflow-hidden">
       {/* Shop Items - Scrollable Container */}
-      <div className="flex flex-col items-center space-y-4 w-full max-w-md flex-1 overflow-y-auto">
+      <div className="flex flex-col items-center space-y-4 w-full max-w-md flex-1 overflow-y-auto pb-50">
         {items
           .slice()
           .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())

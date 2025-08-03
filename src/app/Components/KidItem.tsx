@@ -8,6 +8,10 @@ interface KidItemProps {
   imgSrc?: string;
   stock?: number;
   uploadedBy?: string;
+
+  isPurchased: boolean;               // add this prop
+  onPurchase: () => void;             // add this prop
+  globalProgress?: number;            // optional, add if you want dynamic progress
 }
 
 const KidItem: React.FC<KidItemProps> = ({
@@ -16,18 +20,14 @@ const KidItem: React.FC<KidItemProps> = ({
   imgSrc = "/assets/example-photo.jpeg",
   stock = 1,
   uploadedBy,
+  isPurchased,
+  onPurchase,
+  globalProgress = 40,
 }) => {
-  // const progressPercent = 40;
-
-  // This is the amount of money the user currently has (link to DB later)
-  const userMoney = 10; // example value
 
   // Determine background color based on whether user has enough money
-  const canBuy = userMoney >= price;
+  const canBuy = true; // You can pass this as a prop if needed
   const buttonBgColor = canBuy ? "bg-green-500" : "bg-red-500";
-
-  const isPurchased = false;
-  const globalProgress = 40;
 
   const handleClick = () => {
     if (isPurchased) return;
@@ -36,7 +36,7 @@ const KidItem: React.FC<KidItemProps> = ({
       spread: 70,
       origin: { y: 0.6 },
     });
-    console.log(`Clicked on ${name}`);
+    onPurchase();
   };
 
   return (
@@ -116,6 +116,5 @@ const KidItem: React.FC<KidItemProps> = ({
     </div>
   );
 };
-
 
 export default KidItem;

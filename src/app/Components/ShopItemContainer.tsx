@@ -1,43 +1,88 @@
-import React, { useEffect, useState } from 'react'
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import KidItem from './KidItem';
+import { useChild } from '@/context/ChildContext';
 
 type ShopItem = {
   _id: string;
   name: string;
   price: number;
+  category: string;
   imgSrc?: string;
   stock?: number;
   createdAt: string;
 };
 
 const ShopItemContainer = () => {
+  const { childID, money, setMoney } = useChild(); // ✅ get from context
+
   const [items, setItems] = useState<ShopItem[]>([]);
-  const filters: string[] = [];
-  const addFilter = (filter: string) => {};
-  const removeFilter = (filter: string) => {};
-  const clearFilters = () => {};
+  const [purchasedItems, setPurchasedItems] = useState<Set<string>>(new Set());
+  const [filters, setFilters] = useState<string[]>([]);
+
+  const addFilter = (filter: string) => {
+    setFilters((prev) => (prev.includes(filter) ? prev : [...prev, filter]));
+  };
+
+  const removeFilter = (filter: string) => {
+    setFilters((prev) => prev.filter((f) => f !== filter));
+  };
+
+  const clearFilters = () => setFilters([]);
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch("/api/shopItems");
-        const data = await response.json();
+        const res = await fetch('/api/shopItems');
+        const data = await res.json();
         setItems(data);
-      } catch (error) {
-        console.error("Error fetching shop items:", error);
+      } catch (err) {
+        console.error('Error fetching shop items:', err);
       }
     };
-
     fetchItems();
   }, []);
 
-  const availableFilters = ["Toys", "Books", "Electronics", "Clothing", "Food"];
+  const handlePurchase = async (itemId: string, price: number) => {
+    if (money === null) {
+      alert('Loading money...');
+      return;
+    }
+    if (money < price) {
+      alert('Not enough money!');
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/transactions/${childID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: -price }),
+      });
+
+      if (!res.ok) throw new Error('Transaction failed');
+
+      const updated = await res.json();
+      setMoney(updated.money); // ✅ update shared money
+      setPurchasedItems((prev) => new Set(prev).add(itemId));
+    } catch (err) {
+      console.error('Error processing purchase:', err);
+      alert('Error processing purchase');
+    }
+  };
+
+  const filteredItems =
+    filters.length > 0
+      ? items.filter((item) => filters.includes(item.category))
+      : items;
+
+  const availableFilters = ['Toys', 'Books', 'Electronics', 'Clothing', 'Food'];
 
   return (
     <div className="flex flex-col items-center px-4 pt-10 h-screen overflow-hidden">
-      {/* Shop Items - Scrollable Container */}
       <div className="flex flex-col items-center space-y-4 w-full max-w-md flex-1 overflow-y-auto pb-48">
-        {items
+        {filteredItems
           .slice()
           .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
           .map((item) => (
@@ -47,39 +92,38 @@ const ShopItemContainer = () => {
               price={item.price}
               imgSrc={item.imgSrc}
               stock={item.stock}
+              isPurchased={purchasedItems.has(item._id)}
+              globalProgress={0}
+              onPurchase={() => handlePurchase(item._id, item.price)}
             />
           ))}
       </div>
 
-      {/* Filters Section at Bottom - Fixed */}
+      {/* Filters */}
       <div className="w-full max-w-md fixed bottom-4 left-1/2 transform -translate-x-1/2 z-10">
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
           <h3 className="text-lg font-semibold mb-3 text-gray-800">Filters</h3>
 
-          {/* Active Filters */}
           {filters.length > 0 && (
-            <div className="mb-3">
-              <div className="flex flex-wrap gap-2">
-                {filters.map((filter) => (
-                  <button
-                    key={filter}
-                    onClick={() => removeFilter(filter)}
-                    className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm hover:bg-blue-600 transition-colors"
-                  >
-                    {filter} ×
-                  </button>
-                ))}
+            <div className="mb-3 flex flex-wrap gap-2">
+              {filters.map((filter) => (
                 <button
-                  onClick={clearFilters}
-                  className="bg-gray-500 text-white px-3 py-1 rounded-full text-sm hover:bg-gray-600 transition-colors"
+                  key={filter}
+                  onClick={() => removeFilter(filter)}
+                  className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm hover:bg-blue-600"
                 >
-                  Clear All
+                  {filter} ×
                 </button>
-              </div>
+              ))}
+              <button
+                onClick={clearFilters}
+                className="bg-gray-500 text-white px-3 py-1 rounded-full text-sm hover:bg-gray-600"
+              >
+                Clear All
+              </button>
             </div>
           )}
 
-          {/* Available Filters */}
           <div className="flex flex-wrap gap-2">
             {availableFilters.map((filter) => (
               <button
@@ -100,6 +144,6 @@ const ShopItemContainer = () => {
       </div>
     </div>
   );
-}
+};
 
-export default ShopItemContainer
+export default ShopItemContainer;

@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import QuestList from "../../Components/QuestContainer";
-import { getQuests, toggleQuestCompletion } from "../../data/QuestList";
-import type { Quest } from "../../data/QuestList";
+import QuestList from "../../../Components/QuestContainer";
+import { getQuests, toggleQuestCompletion } from "../../../data/QuestList";
+import type { Quest } from "../../../data/QuestList";
 
 const KidsQuestPage: React.FC = () => {
   const [quests, setQuests] = useState<Quest[]>([]);

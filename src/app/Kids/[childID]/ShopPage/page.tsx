@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import ShopItemContainer from "../../Components/ShopItemContainer";
+import ShopItemContainer from "../../../Components/ShopItemContainer";
 
 const KidsShopPage: React.FC = () => {
   return (

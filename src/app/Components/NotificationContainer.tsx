@@ -2,29 +2,35 @@ import React, { useEffect, useRef } from "react";
 import Notification from "./Notification";
 
 type Props = {
-  onScrollDirectionChange: (dir: 'up' | 'down') => void;
+  onScrollDirectionChange: (dir: "up" | "down") => void;
 };
 
 const NotificationContainer: React.FC<Props> = ({ onScrollDirectionChange }) => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const lastScrollTop = useRef(0);
+  const ticking = useRef(false);
 
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
 
     const handleScroll = () => {
-      const current = el.scrollTop;
-      if (current > lastScrollTop.current) {
-        onScrollDirectionChange('down');
-      } else if (current < lastScrollTop.current) {
-        onScrollDirectionChange('up');
+      if (!ticking.current) {
+        window.requestAnimationFrame(() => {
+          const current = el.scrollTop;
+          if (current !== lastScrollTop.current) {
+            const direction = current > lastScrollTop.current ? "down" : "up";
+            onScrollDirectionChange(direction);
+            lastScrollTop.current = current <= 0 ? 0 : current;
+          }
+          ticking.current = false;
+        });
+        ticking.current = true;
       }
-      lastScrollTop.current = current;
     };
 
-    el.addEventListener('scroll', handleScroll);
-    return () => el.removeEventListener('scroll', handleScroll);
+    el.addEventListener("scroll", handleScroll);
+    return () => el.removeEventListener("scroll", handleScroll);
   }, [onScrollDirectionChange]);
 
   return (
@@ -34,7 +40,7 @@ const NotificationContainer: React.FC<Props> = ({ onScrollDirectionChange }) => 
 
       <div
         ref={scrollRef}
-        className="w-full max-w-md max-h-150 pb-100 overflow-y-auto space-y-2"
+        className="w-full max-w-md max-h-[150px] pb-[100px] overflow-y-auto space-y-2"
       >
         <Notification type="quest" person="Mum" />
         <Notification type="quest" person="Mum" />

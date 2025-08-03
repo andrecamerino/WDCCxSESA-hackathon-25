@@ -10,10 +10,10 @@ interface KidItemProps {
   stock?: number;
   uploadedBy?: string;
 
-  isPurchased: boolean;               // renamed from purchased
+  isPurchased: boolean;  // boolean flag
   onPurchase: () => void;
   globalProgress?: number;
-  canBuy?: boolean;                  // optional, passed from parent
+  canBuy?: boolean;      // optional, default true
 }
 
 const KidItem: React.FC<KidItemProps> = ({
@@ -31,9 +31,6 @@ const KidItem: React.FC<KidItemProps> = ({
   const [showPopup, setShowPopup] = useState(false);
 
   const buttonBgColor = canBuy ? "bg-green-500" : "bg-red-500";
-
-  const purchased = isPurchased(_id);
-  const globalProgress = 40;
 
   const handleClick = () => {
     if (isPurchased || !canBuy) return;

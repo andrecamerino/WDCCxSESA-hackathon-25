@@ -1,7 +1,11 @@
 import React, { useState, useRef } from "react";
 import Notification from "./Notification";
 
-const NotificationContainer = () => {
+interface NotificationContainerProps {
+  onScrollDirectionChange?: (dir: 'up' | 'down') => void;
+}
+
+const NotificationContainer: React.FC<NotificationContainerProps> = ({ onScrollDirectionChange }) => {
   const [notifications, setNotifications] = useState([
     { id: "1", type: "quest", person: "Mum" },
     { id: "2", type: "quest", person: "Mum" },
@@ -16,12 +20,27 @@ const NotificationContainer = () => {
   const [scrollY, setScrollY] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  const lastScrollY = useRef(0);
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    setScrollY(e.currentTarget.scrollTop);
+
+    // Detect scroll direction and call the callback
+    if (onScrollDirectionChange) {
+      const currentY = e.currentTarget.scrollTop;
+      if (currentY > lastScrollY.current) {
+        onScrollDirectionChange('down');
+      } else if (currentY < lastScrollY.current) {
+        onScrollDirectionChange('up');
+      }
+      lastScrollY.current = currentY;
+    }
+  };
+
   const handleDeleteNotification = (id: string) => {
     setNotifications(prev => prev.filter(notification => notification.id !== id));
   };
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    setScrollY(e.currentTarget.scrollTop);
-  };
+
 
   return (
     <div className="flex flex-col items-center rounded-3xl gap-4 p-4">

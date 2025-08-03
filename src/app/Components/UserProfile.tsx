@@ -35,49 +35,49 @@ const UserProfile: React.FC<UserProfileProps> = ({
           <Image
             src="/assets/profile.png"
             alt="User Icon"
-            className="rounded-full  border-white shadow-lg"
-            width={140}
-            height={96}
+            className="rounded-full border-[6px] border-black shadow-lg"
+            width={120}
+            height={120}
           />
 
           {/* Username */}
-          <div className="text-2xl font-bold tracking-wide lowercase">{username}</div>
+          <div className="text-2xl font-bold tracking-wide lowercase mt-2">{username}</div>
 
-        {/* Account info card */}
-        <div className="bg-white text-black rounded-xl px-4 py-4 w-80 flex items-center shadow-lg mt-4 border-6 border-black">
-          {/* Left: Coin icon and balance */}
-          <div className="flex flex-col items-center w-20 space-y-2">
-            <Image
-              src="/assets/coin.png"
-              alt="Coin Icon"
-              width={32}
-              height={32}
-              className="rounded-full"
-            />
-            <div className="flex items-center gap-1">
-              <span className="text-xl font-bold">$</span>
-              <input
-                type="number"
-                readOnly
-                value={balance.toFixed(2)}
-                className="w-[60px] text-center text-md font-bold bg-transparent border-b-2 border-black focus:outline-none"
+          {/* Account info card */}
+          <div className="bg-white text-black rounded-xl px-4 py-4 w-80 flex items-center shadow-lg mt-4 border-[6px] border-black">
+            {/* Left: Coin icon and balance */}
+            <div className="flex flex-col items-center w-20 space-y-2">
+              <Image
+                src="/assets/coin.png"
+                alt="Coin Icon"
+                width={32}
+                height={32}
+                className="rounded-full"
               />
+              <div className="flex items-center gap-1">
+                <span className="text-xl font-bold">$</span>
+                <input
+                  type="number"
+                  readOnly
+                  value={balance.toFixed(2)}
+                  className="w-[60px] text-center text-md font-bold bg-transparent border-b-2 border-black focus:outline-none"
+                />
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="border-l h-16 mx-4" />
+
+            {/* Right: Account info */}
+            <div className="flex flex-col text-sm space-y-2">
+              <div>
+                <span className="font-bold">account type:</span> {accountType}
+              </div>
+              <div>
+                <span className="font-bold">subscription:</span> {subscription}
+              </div>
             </div>
           </div>
-
-          {/* Divider */}
-          <div className="border-l h-16 mx-4" />
-
-          {/* Right: Account info */}
-          <div className="flex flex-col text-sm space-y-2">
-            <div>
-              <span className="font-bold">account type:</span> {accountType}
-            </div>
-            <div>
-              <span className="font-bold">subscription:</span> {subscription}
-            </div>
-          </div>
-        </div>
 
           {/* Logout */}
           <a
@@ -89,8 +89,6 @@ const UserProfile: React.FC<UserProfileProps> = ({
           </a>
         </div>
       </div>
-
-
     </div>
   );
 };

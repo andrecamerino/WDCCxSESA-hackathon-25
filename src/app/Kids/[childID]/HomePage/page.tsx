@@ -98,7 +98,7 @@ const Page = () => {
       </div>
 
       {/* Greeting + Recap */}
-      <div className="text-center mt-6 px-4">
+      <div className="text-center mt- px-4">
         <h1 className="text-3xl font-bold">
           {child ? greeting : "Loading..."}
         </h1>
@@ -108,7 +108,7 @@ const Page = () => {
       </div>
 
       {/* Notifications */}
-      <div className="w-full px-4 mt-6">
+      <div className="w-full px-2">
         <NotificationContainer />
       </div>
     </div>

@@ -116,7 +116,7 @@ const ParentQuestContainer: React.FC = () => {
       </div>
 
       {/* Quest List */}
-      <div className="flex flex-col gap-2 max-h-[500px] overflow-y-auto rounded-t-3xl">
+      <div className="flex flex-col gap-2 max-h-[500px] overflow-y-auto rounded-t-3xl pb-20">
         {quests
           .slice()
           .sort((a, b) => {

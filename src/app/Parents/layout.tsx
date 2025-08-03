@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Sour_Gummy } from "next/font/google";
-import "../globals.css";
+import "../../globals.css";
 
 import ParentHeader from "./../Components/ParentHeader";
 import ParentNavbar from "./../Components/ParentNavbar";

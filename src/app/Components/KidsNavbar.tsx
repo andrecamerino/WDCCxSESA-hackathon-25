@@ -19,7 +19,7 @@ const KidsNavbar = () => {
         style={{
           borderRadius: '30% 70% 35% 65% / 58% 25% 75% 42%',
         }}
-        className="text-gray-700 bg-yellow-300 text-center flex items-center justify-center w-[70px] h-[70px] border-6 border-black"
+        className={`${getClass("quest")} bg-yellow-300`}
       >
         <FaScroll className="text-black text-4xl font-bold" />
       </Link>
@@ -37,7 +37,7 @@ const KidsNavbar = () => {
         style={{
           borderRadius: '68% 32% 63% 37% / 28% 72% 28% 72%',
         }}
-        className="text-gray-700 bg-green-300 text-center flex items-center justify-center w-[70px] h-[70px] border-6 border-black"
+        className={`${getClass("shop")} bg-green-300`}
       >
         <FaShoppingCart className="text-black text-4xl font-bold" />
       </Link>

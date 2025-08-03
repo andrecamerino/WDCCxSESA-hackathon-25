@@ -40,7 +40,8 @@ const Page = () => {
       className="overflow-hidden pt-20"
     >
       {/* Clouds */}
-      <div className="relative w-full h-40 mt-10 overflow-hidden">
+      
+      <div className="relative w-full h-40 mt-10 ">
         <Image
           src="/assets/cloud.png"
           alt="Cloud 1"

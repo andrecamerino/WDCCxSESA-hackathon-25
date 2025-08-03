@@ -1,54 +1,49 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Notification from "./Notification";
 
-const NotificationContainer = () => {
-  const [notifications, setNotifications] = useState([
-    { id: "1", type: "quest", person: "Mum" },
-    { id: "2", type: "quest", person: "Mum" },
-    { id: "3", type: "quest", person: "Dad" },
-    { id: "4", type: "shop", person: "Mum" },
-    { id: "5", type: "shop", person: "Uncle" },
-    { id: "6", type: "save", item: "a skateboard" },
-    { id: "7", type: "save", item: "Minecraft" },
-    { id: "8", type: "save", item: "a new bike" },
-  ]);
+type Props = {
+  onScrollDirectionChange: (dir: 'up' | 'down') => void;
+};
 
-  const [scrollY, setScrollY] = useState(0);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+const NotificationContainer: React.FC<Props> = ({ onScrollDirectionChange }) => {
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const lastScrollTop = useRef(0);
 
-  const handleDeleteNotification = (id: string) => {
-    setNotifications(prev => prev.filter(notification => notification.id !== id));
-  };
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    setScrollY(e.currentTarget.scrollTop);
-  };
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const handleScroll = () => {
+      const current = el.scrollTop;
+      if (current > lastScrollTop.current) {
+        onScrollDirectionChange('down');
+      } else if (current < lastScrollTop.current) {
+        onScrollDirectionChange('up');
+      }
+      lastScrollTop.current = current;
+    };
+
+    el.addEventListener('scroll', handleScroll);
+    return () => el.removeEventListener('scroll', handleScroll);
+  }, [onScrollDirectionChange]);
 
   return (
-    <div className="flex flex-col items-center rounded-3xl gap-4 p-4">
-      <p className="text-sm text-gray-500 text-center">Swipe right to delete →</p>
-      <div
-        ref={scrollContainerRef}
-        className="w-full max-w-md max-h-96 overflow-y-auto space-y-2 pb-20"
-        onScroll={handleScroll}
-      >
+    <div className="flex flex-col items-center rounded-3xl gap-4">
+      <h1 className="text-3xl">Notifications</h1>
+      <h3 className="text-xl">From the last 24 hours</h3>
 
-        {notifications.map((notification, index) => (
-          <Notification
-            key={notification.id}
-            id={notification.id}
-            type={notification.type}
-            person={notification.person}
-            item={notification.item}
-            onDelete={handleDeleteNotification}
-            scrollY={scrollY}
-            index={index}
-          />
-        ))}
-        {notifications.length === 0 && (
-          <div className="text-center py-8 text-gray-500">
-            No notifications to show
-          </div>
-        )}
+      <div
+        ref={scrollRef}
+        className="w-full max-w-md max-h-150 pb-100 overflow-y-auto space-y-2"
+      >
+        <Notification type="quest" person="Mum" />
+        <Notification type="quest" person="Mum" />
+        <Notification type="quest" person="Dad" />
+        <Notification type="shop" person="Mum" />
+        <Notification type="shop" person="Uncle" />
+        <Notification type="save" item="a skateboard" />
+        <Notification type="save" item="Minecraft" />
+        <Notification type="save" item="a new bike" />
       </div>
     </div>
   );

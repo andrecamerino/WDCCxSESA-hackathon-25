@@ -7,6 +7,7 @@ type Quest = {
   reward: number;
   completed: boolean;
   person: string;
+  isParent?: boolean;
 };
 
 const QuestItem: React.FC<Quest> = ({
@@ -15,6 +16,7 @@ const QuestItem: React.FC<Quest> = ({
   reward,
   completed,
   person,
+  isParent = false,
 }) => {
   const [isCompleted, setIsCompleted] = useState(completed);
   const [isCoinJumping, setIsCoinJumping] = useState(false);
@@ -44,26 +46,26 @@ const QuestItem: React.FC<Quest> = ({
     }
   };
 
+  // Different border sizes for parents vs kids
+  const borderClass = isParent ? "border-2" : "border-6";
+  const buttonBorderClass = isParent ? "border-4" : "border-6";
+  const coinBorderClass = isParent ? "border-4" : "border-6";
+
   return (
     <div
       key={id}
       style={{ fontFamily: "var(--font-sour-gummy)" }}
-      className="rounded-[60px] bg-white shadow-[6px_10px_0px_rgba(0,0,0,0.2)] p-8 flex flex-col items-start border-6 border-black"
+      className={`rounded-[60px] bg-white shadow-[6px_10px_0px_rgba(0,0,0,0.2)] p-8 flex flex-col items-start ${borderClass} border-black`}
     >
       <div className="flex justify-between items-center w-full mb-4">
         <p className="text-lg">Quest from: {person}</p>
-        <div className="flex items-center justify-center bg-amber-200 rounded-full px-3 py-1 gap-x-2 border-6 border-black">
+        <div className={`flex items-center justify-center bg-amber-200 rounded-full px-3 py-1 gap-x-2 ${coinBorderClass} border-black`}>
           <Image
             src="/assets/coin.png"
             alt="coin"
             width={40}
             height={24}
-            className={`inline-block transition-all duration-1000 ${
-              isCoinJumping ? 'animate-smooth-jump' : ''
-            }`}
-            style={{
-              animation: isCoinJumping ? 'smoothJump 1s ease-in-out' : 'none'
-            }}
+            className="inline-block"
           />
           <p className="text-lg">{reward}</p>
         </div>
@@ -72,7 +74,7 @@ const QuestItem: React.FC<Quest> = ({
       <p className="font-bold text-2xl mb-5 text-center w-full">{task}</p>
 
       <button
-        className={`border-6 border-black text-center w-full px-6 py-3 rounded-full 
+        className={`${buttonBorderClass} border-black text-center w-full px-6 py-3 rounded-full 
           shadow-[4px_3px_0px_rgba(0,0,0,0.2)] 
           active:shadow-[0px_0px_0px_rgba(0,0,0,0.2)] 
           active:translate-x-[3px] active:translate-y-[3px] 

@@ -30,3 +30,27 @@ export const PATCH = async (
     return NextResponse.json({ error: 'Failed to update quest' }, { status: 500 });
   }
 };
+
+export const DELETE = async (
+  request: Request,
+  contextPromise: Promise<{ params: Promise<{ id: string }> }>
+) => {
+  try {
+    const context = await contextPromise;
+    const params = await context.params;
+    const id = params.id;
+
+    await connect();
+
+    const deletedQuest = await Quest.findByIdAndDelete(id);
+
+    if (!deletedQuest) {
+      return NextResponse.json({ error: 'Quest not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: 'Quest deleted successfully' }, { status: 200 });
+  } catch (error) {
+    console.error('Error deleting quest:', error);
+    return NextResponse.json({ error: 'Failed to delete quest' }, { status: 500 });
+  }
+};

@@ -1,3 +1,5 @@
+// src/data/QuestList.ts
+
 export type Quest = {
   id: string;
   title: string;
@@ -28,7 +30,6 @@ export async function toggleQuestCompletion(id: string, completed: boolean) {
   return res.json();
 }
 
-// createQuest is the function that actually creates the quest
 export function createQuest(title: string): Quest {
   return {
     id: '', // id is required now, but since this is a local creation, leaving empty string
@@ -37,17 +38,14 @@ export function createQuest(title: string): Quest {
   };
 }
 
-export const quests: Quest[] = [
-  createQuest('Feed the pet'),
-  createQuest('Clean your room'),
-  createQuest('Brush your teeth'),
-  createQuest('Do your homework'),
-  createQuest('Help with dinner'),
-  createQuest('Water the plants'),
-  createQuest('Take out the trash'),
-  createQuest('Read for 20 minutes'),
-  createQuest('Organise your backpack'),
-  createQuest('Set the table'),
-  createQuest('Tidy your desk'),
-  createQuest('Make your bed'),
-];
+const QUESTS_KEY = 'quests';
+
+export function loadQuests(): Quest[] {
+  if (typeof window === 'undefined') return [];
+  const stored = localStorage.getItem(QUESTS_KEY);
+  return stored ? JSON.parse(stored) : [];
+}
+
+export function saveQuests(quests: Quest[]) {
+  localStorage.setItem(QUESTS_KEY, JSON.stringify(quests));
+}

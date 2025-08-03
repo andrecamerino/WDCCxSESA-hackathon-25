@@ -20,7 +20,7 @@ const NotificationContainer: React.FC<Props> = ({ onScrollDirectionChange }) => 
           const current = el.scrollTop;
           if (current !== lastScrollTop.current) {
             const direction = current > lastScrollTop.current ? "down" : "up";
-            onScrollDirectionChange(direction);
+            // onScrollDirectionChange(direction);
             lastScrollTop.current = current <= 0 ? 0 : current;
           }
           ticking.current = false;
@@ -35,12 +35,10 @@ const NotificationContainer: React.FC<Props> = ({ onScrollDirectionChange }) => 
 
   return (
     <div className="flex flex-col items-center rounded-3xl gap-4">
-      <h1 className="text-3xl">Notifications</h1>
-      <h3 className="text-xl">From the last 24 hours</h3>
 
       <div
         ref={scrollRef}
-        className="w-full max-w-md max-h-[150px] pb-[100px] overflow-y-auto space-y-2"
+        className="w-full max-w-md h-[400px] pb-[200px] overflow-y-auto space-y-2 pt-4"
       >
         <Notification type="quest" person="Mum" />
         <Notification type="quest" person="Mum" />

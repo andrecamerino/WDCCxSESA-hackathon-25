@@ -18,7 +18,7 @@ const Page = () => {
   useEffect(() => {
     const fetchChildren = async () => {
       try {
-        const response = await fetch('/api/children'); // endpoint should return array of Child
+        const response = await fetch('/api/children');
         const data: Child[] = await response.json();
         setChildren(data);
         if (data.length > 0) setSelectedChild(data[0]);
@@ -44,7 +44,7 @@ const Page = () => {
           alt="Piggy Quest"
           width={150}
           height={150}
-          className="mx-auto mt-10"
+          className="mx-auto"
         />
 
         {/* UI Boxes */}
@@ -105,10 +105,11 @@ const Page = () => {
   );
 };
 
-// Styles remain unchanged
+// Styles
 const contentWrapperStyle: React.CSSProperties = {
   paddingLeft: '20px',
   paddingRight: '20px',
+  paddingTop: '100px', // replaces mt-10 on the image
 };
 
 const boxStyle: React.CSSProperties = {

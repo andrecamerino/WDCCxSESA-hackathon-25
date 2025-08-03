@@ -4,8 +4,7 @@ import "../globals.css";
 
 import KidsNavbar from "../Components/KidsNavbar";
 import Header from "../Components/KidsHeader";
-import { ChildProvider } from "@/context/ChildContext";
-import { useParams } from "next/navigation";
+import ConditionalLayout from "../Components/ConditionalLayout";
 
 const sourGummy = Sour_Gummy({
   variable: "--font-sour-gummy",

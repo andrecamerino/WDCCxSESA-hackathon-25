@@ -28,7 +28,7 @@ const NotificationContainer = () => {
       <p className="text-sm text-gray-500 text-center">Swipe right to delete →</p>
       <div
         ref={scrollContainerRef}
-        className="w-full max-w-md max-h-96 overflow-y-auto space-y-2"
+        className="w-full max-w-md max-h-96 overflow-y-auto space-y-2 pb-20"
         onScroll={handleScroll}
       >
 

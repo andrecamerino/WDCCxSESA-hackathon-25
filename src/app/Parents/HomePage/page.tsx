@@ -1,18 +1,38 @@
 'use client';
 
-import React, { useState } from 'react';
-import ParentNavbar from '../../Components/ParentNavbar';
-import ParentHeader from '../../Components/ParentHeader';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-const Page = () => {
-  // Hooks and state logic must go here inside the component
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedChild, setSelectedChild] = useState('Evan');
-  const children = ['Evan', 'Lily', 'Max'];
+type Child = {
+  _id: string;
+  name: string;
+  email: string;
+  money: number;
+};
 
-  const handleSelect = (child: string) => {
-    setSelectedChild(child);
+const Page = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [children, setChildren] = useState<Child[]>([]);
+  const [selectedChild, setSelectedChild] = useState<Child | null>(null);
+
+  useEffect(() => {
+    const fetchChildren = async () => {
+      try {
+        const response = await fetch('/api/children'); // endpoint should return array of Child
+        const data: Child[] = await response.json();
+        setChildren(data);
+        if (data.length > 0) setSelectedChild(data[0]);
+      } catch (error) {
+        console.error('Error fetching children:', error);
+      }
+    };
+
+    fetchChildren();
+  }, []);
+
+  const handleSelect = (childName: string) => {
+    const child = children.find((c) => c.name === childName);
+    if (child) setSelectedChild(child);
     setShowDropdown(false);
   };
 
@@ -30,7 +50,7 @@ const Page = () => {
         {/* UI Boxes */}
         <div style={boxStyle}>
           <p style={labelStyle}>
-            Current Child: <strong>{selectedChild}</strong>
+            Current Child: <strong>{selectedChild?.name || 'Loading...'}</strong>
           </p>
 
           <div style={{ position: 'relative' }}>
@@ -45,11 +65,11 @@ const Page = () => {
               <ul style={dropdownStyle}>
                 {children.map((child) => (
                   <li
-                    key={child}
-                    onClick={() => handleSelect(child)}
+                    key={child._id}
+                    onClick={() => handleSelect(child.name)}
                     style={dropdownItemStyle}
                   >
-                    {child}
+                    {child.name}
                   </li>
                 ))}
               </ul>
@@ -76,7 +96,7 @@ const Page = () => {
                 height={30}
                 style={{ marginLeft: '10px', marginRight: '6px' }}
               />
-              xxx
+              {selectedChild?.money ?? '...'}
             </span>
           </p>
         </div>
@@ -85,7 +105,7 @@ const Page = () => {
   );
 };
 
-// Styles
+// Styles remain unchanged
 const contentWrapperStyle: React.CSSProperties = {
   paddingLeft: '20px',
   paddingRight: '20px',

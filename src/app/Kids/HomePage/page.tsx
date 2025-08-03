@@ -1,10 +1,34 @@
-"use client";
+'use client';
 
-import React from "react";
-import NotificationContainer from "../../Components/NotificationContainer";
-import Image from "next/image";
+import React, { useState, useRef, useEffect } from 'react';
+import NotificationContainer from '../../Components/NotificationContainer';
+import Image from 'next/image';
 
 const Page = () => {
+  const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | null>(null);
+  const resetTimer = useRef<NodeJS.Timeout | null>(null);
+
+  const handleScrollDirectionChange = (dir: 'up' | 'down') => {
+    setScrollDirection(dir);
+
+    // Reset previous timer if still active
+    if (resetTimer.current) {
+      clearTimeout(resetTimer.current);
+    }
+
+    // Set timer to reset direction after 500ms
+    resetTimer.current = setTimeout(() => {
+      setScrollDirection(null);
+    }, 250);
+  };
+
+  // Clean up on unmount
+  useEffect(() => {
+    return () => {
+      if (resetTimer.current) clearTimeout(resetTimer.current);
+    };
+  }, []);
+
   return (
     <div
       style={{
@@ -13,11 +37,11 @@ const Page = () => {
         backgroundPosition: "center",
         minHeight: "100vh",
       }}
-      
       className="overflow-hidden pt-20"
     >
-      {/* Clouds Layer */}
-      <div className="relative w-full h-40 mt-10 overflow-hidden">
+      {/* Clouds */}
+      
+      <div className="relative w-full h-40 mt-10 ">
         <Image
           src="/assets/cloud.png"
           alt="Cloud 1"
@@ -25,7 +49,6 @@ const Page = () => {
           height={60}
           className="absolute top-4 animate-cloud-left-to-right opacity-100"
         />
-
         <Image
           src="/assets/cloud.png"
           alt="Cloud 2"
@@ -34,18 +57,27 @@ const Page = () => {
           className="absolute top-20 animate-cloud-left-to-right-slow opacity-100"
         />
 
-        {/* Piggy Image */}
+        {/* Piggy */}
         <div className="relative z-10 flex justify-center">
           <Image
             src="/assets/piggy.png"
             alt="Piggy Quest"
             width={150}
             height={150}
-            className="mx-auto"
+            className={`mx-auto transition-transform duration-300 ${
+              // This controls the actual rotation.
+              scrollDirection === 'up'
+                ? '-rotate-15'
+                : scrollDirection === 'down'
+                ? 'rotate-15'
+                : ''
+            }`}
           />
         </div>
       </div>
-      <NotificationContainer />
+
+      {/* Notifications */}
+      <NotificationContainer onScrollDirectionChange={handleScrollDirectionChange} />
     </div>
   );
 };

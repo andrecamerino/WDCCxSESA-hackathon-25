@@ -13,9 +13,9 @@ type ShopItem = {
 const ShopItemContainer = () => {
   const [items, setItems] = useState<ShopItem[]>([]);
   const filters: string[] = [];
-  const addFilter = (filter: string) => {};
-  const removeFilter = (filter: string) => {};
-  const clearFilters = () => {};
+  const addFilter = (filter: string) => { };
+  const removeFilter = (filter: string) => { };
+  const clearFilters = () => { };
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -86,11 +86,10 @@ const ShopItemContainer = () => {
                 key={filter}
                 onClick={() => addFilter(filter)}
                 disabled={filters.includes(filter)}
-                className={`px-3 py-1 rounded-full text-sm transition-colors ${
-                  filters.includes(filter)
+                className={`px-3 py-1 rounded-full text-sm transition-colors ${filters.includes(filter)
                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     : 'bg-green-500 text-white hover:bg-green-600'
-                }`}
+                  }`}
               >
                 {filter}
               </button>

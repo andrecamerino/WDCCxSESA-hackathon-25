@@ -100,13 +100,13 @@ const Login = () => {
         >
           <button
             onClick={() => selectLoginType("parents")}
-            className="login-button bg-green-300 hover:bg-green-400 text-base font-bold py-3 px-6 rounded-full shadow-md w-full sm:text-lg sm:py-4 sm:px-8 transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
+            className="login-button bg-green-300 hover:bg-green-400 text-base font-bold py-3 px-6 rounded-full border-4 border-black shadow-md w-full sm:text-lg sm:py-4 sm:px-8 transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
           >
             Parents Login
           </button>
           <button
             onClick={() => selectLoginType("kids")}
-            className="login-button bg-green-300 hover:bg-green-400 text-base font-bold py-3 px-6 rounded-full shadow-md w-full sm:text-lg sm:py-4 sm:px-8 transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
+            className="login-button bg-green-300 hover:bg-green-400 text-base font-bold py-3 px-6 rounded-full border-4 border-black shadow-md w-full sm:text-lg sm:py-4 sm:px-8 transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
           >
             Kids Login
           </button>
@@ -115,7 +115,7 @@ const Login = () => {
         {/* Login Form */}
         {loginType && (
           <form
-            className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-white bg-opacity-90 rounded-2xl p-6 shadow-xl border border-green-200"
+            className="absolute inset-0 flex flex-col items-center justify-center gap-6 bg-white bg-opacity-90 rounded-2xl p-10 shadow-xl border-4 border-black min-h-[300px]"
             onSubmit={(e) => {
               e.preventDefault();
               setPiggySrc("/assets/piggywink.png");
@@ -135,17 +135,17 @@ const Login = () => {
               type="email"
               placeholder="Email"
               required
-              className="login-input w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="login-input w-full rounded-lg border-4 border-black px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400"
             />
             <input
               type="password"
               placeholder="Password"
               required
-              className="login-input w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="login-input w-full rounded-lg border-4 border-black px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400"
             />
             <button
               type="submit"
-              className="login-button bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full shadow-md w-full sm:text-lg sm:py-4 sm:px-8 transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
+              className="login-button bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full border-4 border-black shadow-md w-full sm:text-lg sm:py-4 sm:px-8 transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
             >
               Login
             </button>

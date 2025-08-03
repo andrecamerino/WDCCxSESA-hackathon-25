@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import confetti from "canvas-confetti";
-import { useShopState } from "./ShopStateContext";
 
 interface KidItemProps {
   _id: string;
@@ -11,9 +10,10 @@ interface KidItemProps {
   stock?: number;
   uploadedBy?: string;
 
-  isPurchased: boolean;               // add this prop
-  onPurchase: () => void;             // add this prop
-  globalProgress?: number;            // optional, add if you want dynamic progress
+  isPurchased: boolean;               // renamed from purchased
+  onPurchase: () => void;
+  globalProgress?: number;
+  canBuy?: boolean;                  // optional, passed from parent
 }
 
 const KidItem: React.FC<KidItemProps> = ({
@@ -26,22 +26,17 @@ const KidItem: React.FC<KidItemProps> = ({
   isPurchased,
   onPurchase,
   globalProgress = 40,
+  canBuy = true,
 }) => {
-  const { isPurchased, markAsPurchased } = useShopState();
   const [showPopup, setShowPopup] = useState(false);
 
-  // This is the amount of money the user currently has (link to DB later)
-  const userMoney = 10; // example value
-
-  // Determine background color based on whether user has enough money
-  const canBuy = true; // You can pass this as a prop if needed
   const buttonBgColor = canBuy ? "bg-green-500" : "bg-red-500";
 
   const purchased = isPurchased(_id);
   const globalProgress = 40;
 
   const handleClick = () => {
-    if (purchased || !canBuy) return;
+    if (isPurchased || !canBuy) return;
     setShowPopup(true);
   };
 
@@ -51,10 +46,8 @@ const KidItem: React.FC<KidItemProps> = ({
       spread: 70,
       origin: { y: 0.6 },
     });
-    
-    markAsPurchased(_id);
+    onPurchase();
     setShowPopup(false);
-    console.log(`Purchased ${name}`);
   };
 
   const handleCancelPurchase = () => {
@@ -73,9 +66,9 @@ const KidItem: React.FC<KidItemProps> = ({
         />
 
         {/* entire item container */}
-        <div 
+        <div
           className={`relative z-20 w-55 h-55 bg-white shadow-2xl rounded-4xl mx-auto my-4 p-4 cursor-pointer transition-all duration-300 ${
-            purchased ? 'opacity-30 pointer-events-none' : 'hover:scale-105'
+            isPurchased ? "opacity-30 pointer-events-none" : "hover:scale-105"
           }`}
           onClick={handleClick}
         >
@@ -124,20 +117,12 @@ const KidItem: React.FC<KidItemProps> = ({
         {/* Price container with dynamic background color */}
         <div
           className={`absolute bottom-0 left-1/4 z-20 -translate-x-6 -translate-y-1 w-[200px] h-[80px] rounded-3xl ${buttonBgColor} border-4 border-black flex items-center justify-center gap-2 cursor-pointer transition-transform duration-200 hover:scale-105 ${
-            purchased ? 'pointer-events-none' : ''
+            isPurchased ? "pointer-events-none" : ""
           }`}
           onClick={handleClick}
         >
-          <Image
-            src="/assets/coin.png"
-            alt="Coin"
-            width={60}
-            height={60}
-            className=""
-          />
-          <span className="text-black text-2xl font-semibold select-none">
-            : ${price}
-          </span>
+          <Image src="/assets/coin.png" alt="Coin" width={60} height={60} />
+          <span className="text-black text-2xl font-semibold select-none">: ${price}</span>
         </div>
       </div>
 
@@ -147,7 +132,7 @@ const KidItem: React.FC<KidItemProps> = ({
           <div className="bg-white rounded-3xl p-6 mx-4 max-w-sm w-full shadow-2xl border-4 border-black">
             <div className="text-center">
               <h3 className="text-2xl font-bold text-gray-800 mb-4">Confirm Purchase</h3>
-              
+
               <div className="mb-6">
                 <div className="flex items-center justify-center mb-3">
                   {imgSrc !== "" && (
@@ -162,12 +147,7 @@ const KidItem: React.FC<KidItemProps> = ({
                 </div>
                 <p className="text-lg font-semibold text-gray-700 mb-2">{name}</p>
                 <div className="flex items-center justify-center gap-2">
-                  <Image
-                    src="/assets/coin.png"
-                    alt="Coin"
-                    width={30}
-                    height={30}
-                  />
+                  <Image src="/assets/coin.png" alt="Coin" width={30} height={30} />
                   <span className="text-xl font-bold text-gray-800">${price}</span>
                 </div>
               </div>

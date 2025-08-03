@@ -74,6 +74,7 @@ const Notification: React.FC<NotificationProps> = ({ id, type, person, item, onD
     }
   }, [type, item, person]);
 
+
   // Calculate scroll-based animation values
   const calculateScrollAnimation = () => {
     // Only apply scaling if there's actual scroll
@@ -125,13 +126,29 @@ const Notification: React.FC<NotificationProps> = ({ id, type, person, item, onD
     }
   };
 
+  const handleNavigation = () => {
+    if (isDragging || isDeleting || translateX !== 0) return;
+
+    if (type === "quest") {
+      window.location.href = "/Kids/QuestPage";
+    } else if (type === "shop") {
+      window.location.href = "/KidsShop";
+    } else if (type === "save") {
+      window.location.href = "/KidsShop";
+    }
+  };
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    handleNavigation();
+  };
+
   const handleTouchEnd = () => {
     setIsDragging(false);
 
     // If swiped more than 100px to the right, delete the notification
     if (translateX > 100) {
       setIsDeleting(true);
-      // Animate out further before deleting
       setTranslateX(400);
       setTimeout(() => {
         onDelete(id);
@@ -139,6 +156,10 @@ const Notification: React.FC<NotificationProps> = ({ id, type, person, item, onD
     } else {
       // Snap back to original position
       setTranslateX(0);
+      // ADD THIS: Navigate if it was just a tap (not a swipe)
+      if (translateX < 10) {
+        setTimeout(handleNavigation, 100);
+      }
     }
   };
 
@@ -171,6 +192,9 @@ const Notification: React.FC<NotificationProps> = ({ id, type, person, item, onD
     } else {
       // Snap back to original position
       setTranslateX(0);
+      if (translateX < 10) {
+        setTimeout(handleNavigation, 100);
+      }
     }
   };
 
@@ -178,12 +202,13 @@ const Notification: React.FC<NotificationProps> = ({ id, type, person, item, onD
 
   return (
     <div
-      className="relative overflow-hidden mx-2 transition-all duration-300 ease-out"
+      className="relative overflow-hidden mx-2 transition-all duration-300 ease-out cursor-pointer"
       style={{
         transform: `scale(${scale})`,
         opacity: opacity,
         transformOrigin: 'center top'
       }}
+      onClick={handleClick} // ADD THIS LINE
     >
       {/* Delete background */}
       <div className="absolute inset-0 bg-red-400 rounded-4xl border-6 border-black flex items-center justify-end pr-6">

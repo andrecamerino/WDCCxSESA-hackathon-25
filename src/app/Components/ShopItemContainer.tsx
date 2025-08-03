@@ -13,6 +13,7 @@ type ShopItem = {
 const ShopItemContainer = () => {
   const [items, setItems] = useState<ShopItem[]>([]);
 
+
   useEffect(() => {
     const fetchItems = async () => {
       try {

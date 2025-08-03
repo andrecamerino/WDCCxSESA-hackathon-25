@@ -23,12 +23,12 @@ const KidItem: React.FC<KidItemProps> = ({
   const { isPurchased, markAsPurchased } = useShopState();
   const [showPopup, setShowPopup] = useState(false);
 
-  // This is the amount of money the user currently has (link to DB later)
-  const userMoney = 10; // example value
+    // This is the amount of money the user currently has (link to DB later)
+    const userMoney = 10; // example value
 
-  // Determine background color based on whether user has enough money
-  const canBuy = userMoney >= price;
-  const buttonBgColor = canBuy ? "bg-green-500" : "bg-red-500";
+    // Determine background color based on whether user has enough money
+    const canBuy = userMoney >= price;
+    const buttonBgColor = canBuy ? "bg-green-500" : "bg-red-500";
 
   const purchased = isPurchased(_id);
   const globalProgress = 40;

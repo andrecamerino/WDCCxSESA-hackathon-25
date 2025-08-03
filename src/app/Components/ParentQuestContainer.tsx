@@ -135,6 +135,7 @@ const ParentQuestContainer: React.FC = () => {
                 reward={quest.reward}
                 completed={quest.completed}
                 person={quest.person}
+                isParent={true}
               />
               <button
                 onClick={() => deleteQuest(quest._id)}
